@@ -3,7 +3,7 @@ FROM golang:1.16.3-alpine as builder
 ARG COIN=btc
 
 
-RUN apk add --no-cache git gcc gflags-dev zlib-dev lz4-dev bzip2-dev snappy-dev zstd-dev libzmq
+RUN apk add --no-cache git make gcc gflags-dev zlib-dev lz4-dev bzip2-dev snappy-dev zstd-dev libzmq
 
 # build rocksdb
 RUN git clone https://github.com/facebook/rocksdb.git && \
