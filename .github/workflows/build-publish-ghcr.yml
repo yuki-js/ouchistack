@@ -10,6 +10,7 @@ jobs:
       matrix:
         name: 
           - btcd
+          - blockbook
     permissions:
       packages: write
       contents: read
