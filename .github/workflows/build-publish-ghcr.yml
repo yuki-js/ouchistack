@@ -9,8 +9,8 @@ jobs:
     strategy: 
       matrix:
         name: 
-          - btcd
           - blockbook
+          - btcd
     permissions:
       packages: write
       contents: read
