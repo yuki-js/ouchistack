@@ -7,8 +7,9 @@ jobs:
     name: Push Docker image to GitHub Packages
     runs-on: ubuntu-latest
     strategy: 
-      name: 
-        - btcd
+      matrix:
+        name: 
+          - btcd
     permissions:
       packages: write
       contents: read
