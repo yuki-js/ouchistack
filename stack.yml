@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  btcd:
+    image: docker.pkg.github.com/yuki-js/ouchistack/btcd:latest
+    volumes:
+      - shared:/rpc
+      - btcd:/data
+    environment:
+      - RPCUSER=a
+      - RPCPASS=a
+      - NETWORK=mainnet
+      - DEBUG=info
+      - MINING_ADDRESS
+    entrypoint: ["bash", "./start-btcd.sh"]
+    ports:
+      - 8334
+      - 8333
+  bitcoind:
+    image: nicolasdorier/docker-bitcoin:0.18.0
+    # specify additional command line arguments here
+    command: bitcoind
+    healthcheck:
+      test: ["CMD", "/entrypoint.sh", "bitcoin-cli", "getinfo"]
+    ports:
+      # change to 18333 if running testnet
+      - 8333
+    volumes:
+      - bitcoind:/data
+volumes:
+  shared:
+    driver: local
+  btcd:
+    driver: local
+  bitcoind:
+    driver: local
