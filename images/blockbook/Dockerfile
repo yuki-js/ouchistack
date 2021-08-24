@@ -16,7 +16,7 @@ RUN cd /tmp && \
 RUN git clone https://github.com/facebook/rocksdb.git && \
     cd rocksdb && \
     git checkout v6.8.1 && \
-    CFLAGS=-fPIC CXXFLAGS=-fPIC make release && \
+    CFLAGS=-fPIC CXXFLAGS=-fPIC make shared_lib && \
     sudo make install
     
 ENV CGO_CFLAGS="-I/usr/local/include"
