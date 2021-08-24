@@ -1,6 +1,6 @@
 FROM golang:1.16.3-alpine as builder
 
-RUN apk add --no-cache build-base git zlib-dev lz4-dev bzip2-dev snappy-dev zstd-dev libzmq
+RUN apk add --no-cache build-base git zlib-dev lz4-dev cmake bzip2-dev snappy-dev zstd-dev libzmq
 
 RUN cd /tmp && \
     git clone https://github.com/gflags/gflags.git && \
