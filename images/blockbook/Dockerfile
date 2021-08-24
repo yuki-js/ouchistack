@@ -1,15 +1,21 @@
 FROM alpine:3.13 as builder
 
 RUN apk update
-RUN apk add --no-cache zlib-dev bzip2-dev lz4-dev snappy-dev zstd-dev gflags-dev build-base linux-headers git bash perl
+RUN apk add --no-cache wget zlib-dev bzip2-dev lz4-dev snappy-dev zstd-dev gflags-dev build-base linux-headers git bash perl
     
 # build rocksdb
 RUN git clone https://github.com/facebook/rocksdb.git && \
     cd rocksdb && \
     git checkout v6.8.1 && \
-    CFLAGS=-fPIC CXXFLAGS=-fPIC make shared_lib && \
+    CFLAGS=-fPIC CXXFLAGS=-fPIC make release && \
     sudo make install
-    
+
+# install go
+RUN wget https://golang.org/dl/go1.14.2.linux-amd64.tar.gz && tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz
+RUN mkdir $HOME/go
+ENV GOPATH=$HOME/go
+ENV PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
 ENV CGO_CFLAGS="-I/usr/local/include"
 ENV CGO_LDFLAGS="-L/usr/local/lib -lrocksdb -lstdc++ -lm -lz -ldl -lbz2 -lsnappy -llz4"
 
