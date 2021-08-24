@@ -16,6 +16,9 @@ RUN sed -i 's/install -C/install -c/g' Makefile && \
 RUN wget https://golang.org/dl/go1.14.2.linux-amd64.tar.gz && tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz
 ENV GOPATH=$HOME/go
 ENV PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+RUN echo $(which go)
+RUN file $(which go)
+RUN go version
 
 ENV CGO_CFLAGS="-I/usr/local/include"
 ENV CGO_LDFLAGS="-L/usr/local/lib -lrocksdb -lstdc++ -lm -lz -ldl -lbz2 -lsnappy -llz4"
