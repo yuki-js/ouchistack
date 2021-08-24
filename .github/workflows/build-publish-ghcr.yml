@@ -11,6 +11,7 @@ jobs:
         name: 
           - blockbook
           - btcd
+          - bitcoind
     permissions:
       packages: write
       contents: read
