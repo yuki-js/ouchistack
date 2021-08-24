@@ -4,11 +4,12 @@ RUN apk update
 RUN apk add --no-cache wget zlib-dev bzip2-dev lz4-dev snappy-dev zstd-dev gflags-dev build-base linux-headers git bash perl
     
 # build rocksdb
-RUN git clone https://github.com/facebook/rocksdb.git && \
-    cd rocksdb && \
-    git checkout v6.8.1 && \
-    CFLAGS=-fPIC CXXFLAGS=-fPIC make release && \
-    RUN sed -i 's/install -C/install -c/g' Makefile && \
+WORKDIR /workdir
+RUN git clone https://github.com/facebook/rocksdb.git
+WORKDIR /workdir/rocksdb
+RUN git checkout v6.8.1 && \
+    CFLAGS=-fPIC CXXFLAGS=-fPIC make release
+RUN sed -i 's/install -C/install -c/g' Makefile && \
     make install
 
 # install go
