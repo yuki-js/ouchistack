@@ -8,6 +8,7 @@ RUN git clone https://github.com/facebook/rocksdb.git && \
     cd rocksdb && \
     git checkout v6.8.1 && \
     CFLAGS=-fPIC CXXFLAGS=-fPIC make release && \
+    RUN sed -i 's/install -C/install -c/g' Makefile && \
     make install
 
 # install go
