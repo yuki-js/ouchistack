@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:latest as builder
 
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
 RUN apk --no-cache add autoconf automake build-base libressl boost-dev chrpath wget file gnupg libevent-dev libtool linux-headers zeromq-dev
@@ -46,3 +46,23 @@ RUN strip ${BITCOIN_PREFIX}/bin/bitcoin-tx
 RUN strip ${BITCOIN_PREFIX}/bin/bitcoind
 RUN strip ${BITCOIN_PREFIX}/lib/libbitcoinconsensus.a
 RUN strip ${BITCOIN_PREFIX}/lib/libbitcoinconsensus.so.0.0.0
+
+
+FROM alpine
+
+ENV BITCOIN_DATA=/home/bitcoin/.bitcoin
+ENV BITCOIN_VERSION=0.21.1
+ENV BITCOIN_PREFIX=/opt/bitcoin-${BITCOIN_VERSION}
+
+COPY --from=builder ${BITCOIN_PREFIX}/bin/bitcoind /usr/bin/bitcoind
+COPY --from=builder ${BITCOIN_PREFIX}/bin/bitcoin-cli /usr/bin/bitcoin-cli
+
+
+RUN adduser -S bitcoin
+USER bitcoin
+
+VOLUME ["/home/bitcoin/.bitcoin"]
+
+EXPOSE 8332 8333 18332 18333 18444
+
+ENTRYPOINT ["/usr/bin/bitcoind"]
