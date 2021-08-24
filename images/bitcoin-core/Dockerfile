@@ -8,7 +8,7 @@ ENV BERKELEYDB_PREFIX=/opt/${BERKELEYDB_VERSION}
 
 WORKDIR /
 RUN wget https://download.oracle.com/berkeley-db/${BERKELEYDB_VERSION}.tar.gz && \
-    tar -xzf *.tar.gz && \
+    tar -xzf ${BERKELEYDB_VERSION}.tar.gz && \
     sed s/__atomic_compare_exchange/__atomic_compare_exchange_db/g -i ${BERKELEYDB_VERSION}/dbinc/atomic.h && \
     mkdir -p ${BERKELEYDB_PREFIX}
 WORKDIR /${BERKELEYDB_VERSION}/build_unix    
@@ -20,7 +20,7 @@ WORKDIR /
 ENV BITCOIN_VERSION=0.21.1
 ENV BITCOIN_PREFIX=/opt/bitcoin-${BITCOIN_VERSION}
 
-RUN wget https://bitcoincore.org/bin/bitcoin-core-${BITCOIN_VERSION}/bitcoin-${BITCOIN_VERSION}.tar.gz && tar -xzf *.tar.gz
+RUN wget https://bitcoincore.org/bin/bitcoin-core-${BITCOIN_VERSION}/bitcoin-${BITCOIN_VERSION}.tar.gz && tar -xzf bitcoin-${BITCOIN_VERSION}.tar.gz
 WORKDIR /bitcoin-${BITCOIN_VERSION}
 
 RUN sed -i '/AC_PREREQ/a\AR_FLAGS=cr' src/univalue/configure.ac && \
