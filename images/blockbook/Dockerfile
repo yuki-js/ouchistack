@@ -25,4 +25,3 @@ RUN mkdir -p $GOPATH/src/github.com/trezor && \
     cd $GOPATH/src/github.com/trezor && \
     git clone https://github.com/trezor/blockbook.git
 WORKDIR $GOPATH/src/github.com/trezor/blockbook
-RUN /usr/local/go/bin/go build
