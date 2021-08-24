@@ -8,7 +8,7 @@ RUN git clone https://github.com/facebook/rocksdb.git && \
     cd rocksdb && \
     git checkout v6.8.1 && \
     CFLAGS=-fPIC CXXFLAGS=-fPIC make release && \
-    sudo make install
+    make install
 
 # install go
 RUN wget https://golang.org/dl/go1.14.2.linux-amd64.tar.gz && tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz
