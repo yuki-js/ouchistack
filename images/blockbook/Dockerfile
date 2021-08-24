@@ -14,7 +14,6 @@ RUN sed -i 's/install -C/install -c/g' Makefile && \
 
 # install go
 RUN wget https://golang.org/dl/go1.14.2.linux-amd64.tar.gz && tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz
-RUN mkdir $HOME/go
 ENV GOPATH=$HOME/go
 ENV PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
@@ -22,6 +21,8 @@ ENV CGO_CFLAGS="-I/usr/local/include"
 ENV CGO_LDFLAGS="-L/usr/local/lib -lrocksdb -lstdc++ -lm -lz -ldl -lbz2 -lsnappy -llz4"
 
 # build blockbook
-WORKDIR $GOPATH/src
-RUN git clone https://github.com/trezor/blockbook.git
-RUN cd blockbook && go build
+RUN mkdir -p $GOPATH/src/github.com/trezor && \
+    cd $GOPATH/src/github.com/trezor && \
+    git clone https://github.com/trezor/blockbook.git
+WORKDIR $GOPATH/src/github.com/trezor/blockbook
+RUN go build
