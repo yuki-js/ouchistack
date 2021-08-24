@@ -1,16 +1,7 @@
-FROM golang:1.16.3-alpine as builder
+FROM alpine:3.13 as builder
 
-RUN apk add --no-cache build-base git zlib-dev lz4-dev cmake bzip2-dev snappy-dev zstd-dev libzmq
-
-RUN cd /tmp && \
-    git clone https://github.com/gflags/gflags.git && \
-    cd gflags && \
-    mkdir build && \
-    cd build && \
-    cmake -DBUILD_SHARED_LIBS=1 -DGFLAGS_INSTALL_SHARED_LIBS=1 .. && \
-    make install && \
-    cd /tmp && \
-    rm -R /tmp/gflags/
+RUN apk update
+RUN apk add --no-cache zlib-dev bzip2-dev lz4-dev snappy-dev zstd-dev gflags-dev build-base linux-headers git bash perl
     
 # build rocksdb
 RUN git clone https://github.com/facebook/rocksdb.git && \
