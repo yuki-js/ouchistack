@@ -14,6 +14,7 @@ jobs:
           - blockbook
           - btcd
           - bitcoin-core
+          - monacoin-core
     permissions:
       packages: write
       contents: read
