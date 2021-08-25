@@ -30,7 +30,7 @@ RUN mkdir -p $GOPATH/src/github.com/trezor && \
 WORKDIR $GOPATH/src/github.com/trezor/blockbook
 RUN go build -ldflags "-s -w"
 
-FROM alpine:latest as builder
+FROM alpine:latest
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
 RUN apk update
 RUN apk add --no-cache zeromq
