@@ -21,7 +21,7 @@ ENV MONACOIN_VERSION=0.17.1
 ENV MONACOIN_PREFIX=/opt/monacoin-${MONACOIN_VERSION}
 
 RUN wget https://github.com/monacoinproject/monacoin/releases/download/monacoin-${MONACOIN_VERSION}/monacoin-${MONACOIN_VERSION}-x86_64-linux-gnu.tar.gz && \
-    tar -xzf -C /monacoin-${MONACOIN_VERSION} monacoin-${MONACOIN_VERSION}-x86_64-linux-gnu.tar.gz 
+    tar -C /monacoin-${MONACOIN_VERSION} -xzf monacoin-${MONACOIN_VERSION}-x86_64-linux-gnu.tar.gz 
 WORKDIR /monacoin-${MONACOIN_VERSION}
 
 RUN sed -i '/AC_PREREQ/a\AR_FLAGS=cr' src/univalue/configure.ac && \
