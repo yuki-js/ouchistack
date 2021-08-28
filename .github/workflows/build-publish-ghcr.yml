@@ -1,7 +1,6 @@
 name: Publish Docker image
 on:
   push:
-    paths: images/**
 
 jobs:
   push_to_registry:
@@ -16,6 +15,7 @@ jobs:
           - btcd
           - bitcoin-core
           - monacoin-core
+          - bitzeny
     permissions:
       packages: write
       contents: read
