@@ -17,14 +17,12 @@ RUN make -j$(nproc)
 RUN make install
 
 WORKDIR /
-ENV MONACOIN_VERSION=0.17.1
-ENV MONACOIN_PREFIX=/opt/monacoin-${MONACOIN_VERSION}
+ENV MONACOIN_PREFIX=/opt/monacoin
 
-RUN mkdir /monacoin-source && \
-    wget https://github.com/monacoinproject/monacoin/archive/refs/tags/monacoin-${MONACOIN_VERSION}.tar.gz && \
-    tar -C /monacoin-source -xzf monacoin-${MONACOIN_VERSION}.tar.gz
+RUN wget https://github.com/monacoinproject/monacoin/archive/refs/tags/monacoin-0.17.1.tar.gz && \
+    tar -xzf monacoin-0.17.1.tar.gz
 
-WORKDIR /monacoin-source
+WORKDIR /monacoin-monacoin-0.17.1
 
 RUN sed -i '/AC_PREREQ/a\AR_FLAGS=cr' src/univalue/configure.ac && \
     sed -i '/AX_PROG_CC_FOR_BUILD/a\AR_FLAGS=cr' src/secp256k1/configure.ac && \
