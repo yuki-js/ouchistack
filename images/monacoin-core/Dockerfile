@@ -19,8 +19,12 @@ RUN make install
 WORKDIR /
 ENV MONACOIN_VERSION=0.17.1
 ENV MONACOIN_PREFIX=/opt/monacoin-${MONACOIN_VERSION}
-RUN wget https://github.com/monacoinproject/monacoin/releases/download/monacoin-${MONACOIN_VERSION}/monacoin-${MONACOIN_VERSION}-x86_64-linux-gnu.tar.gz && \
-    tar -xzf monacoin-${MONACOIN_VERSION}-x86_64-linux-gnu.tar.gz 
+
+RUN mkdir /monacoin-source && \
+    wget https://github.com/monacoinproject/monacoin/archive/refs/tags/monacoin-${MONACOIN_VERSION}.tar.gz && \
+    tar -C /monacoin-source -xzf monacoin-${MONACOIN_VERSION}.tar.gz
+
+WORKDIR /monacoin-source
 
 RUN sed -i '/AC_PREREQ/a\AR_FLAGS=cr' src/univalue/configure.ac && \
     sed -i '/AX_PROG_CC_FOR_BUILD/a\AR_FLAGS=cr' src/secp256k1/configure.ac && \
