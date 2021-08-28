@@ -5,7 +5,7 @@ ENV BITZENY_PREFIX=/opt/bitzeny
 
 RUN mkdir /bitzeny-source && \
     wget https://github.com/BitzenyCoreDevelopers/bitzeny/archive/refs/tags/z2.0.2.tar.gz && \
-    tar -C /bitzeny-source -xzf bitzeny-z2.0.2.tar.gz
+    tar -C /bitzeny-source -xzf z2.0.2.tar.gz
 
 WORKDIR /bitzeny-source
 
