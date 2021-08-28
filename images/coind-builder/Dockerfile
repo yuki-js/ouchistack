@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
-RUN apk --no-cache add autoconf automake build-base libressl boost-dev chrpath wget file gnupg libevent-dev libtool linux-headers zeromq-dev
+RUN apk --no-cache add autoconf automake build-base libressl libressl-dev boost-dev chrpath wget file gnupg libevent-dev libtool linux-headers zeromq-dev
 
 ENV BERKELEYDB_VERSION=db-4.8.30.NC
 ENV BERKELEYDB_PREFIX=/opt/${BERKELEYDB_VERSION}

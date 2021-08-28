@@ -1,14 +1,12 @@
 FROM ghcr.io/yuki-js/ouchistack/coind-builder:latest as builder
 
-RUN apk add --no-cache openssl-dev
-
 WORKDIR /
 ENV MONACOIN_PREFIX=/opt/monacoin
 
-RUN wget https://github.com/monacoinproject/monacoin/archive/refs/tags/monacoin-0.17.1.tar.gz && \
-    tar -xzf monacoin-0.17.1.tar.gz
+RUN wget https://github.com/monacoinproject/monacoin/archive/refs/tags/v0.20.2rc2.tar.gz && \
+    tar -xzf v0.20.2rc2.tar.gz
 
-WORKDIR /monacoin-monacoin-0.17.1
+WORKDIR /monacoin-v0.20.2rc2
 
 RUN sed -i '/AC_PREREQ/a\AR_FLAGS=cr' src/univalue/configure.ac && \
     sed -i '/AX_PROG_CC_FOR_BUILD/a\AR_FLAGS=cr' src/secp256k1/configure.ac && \
