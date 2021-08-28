@@ -5,9 +5,8 @@ ENV MONACOIN_PREFIX=/opt/monacoin
 
 RUN wget https://github.com/monacoinproject/monacoin/archive/refs/tags/v0.20.2rc2.tar.gz && \
     tar -xzf v0.20.2rc2.tar.gz
-
-WORKDIR /monacoin-v0.20.2rc2
-
+    
+WORKDIR /monacoin-0.20.2rc2
 RUN sed -i '/AC_PREREQ/a\AR_FLAGS=cr' src/univalue/configure.ac && \
     sed -i '/AX_PROG_CC_FOR_BUILD/a\AR_FLAGS=cr' src/secp256k1/configure.ac && \
     sed -i s:sys/fcntl.h:fcntl.h: src/compat.h

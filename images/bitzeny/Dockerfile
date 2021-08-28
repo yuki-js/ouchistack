@@ -3,11 +3,10 @@ FROM ghcr.io/yuki-js/ouchistack/coind-builder:latest as builder
 WORKDIR /
 ENV BITZENY_PREFIX=/opt/bitzeny
 
-RUN mkdir /bitzeny-source && \
-    wget https://github.com/BitzenyCoreDevelopers/bitzeny/archive/refs/tags/z2.0.2.tar.gz && \
-    tar -C /bitzeny-source -xzf z2.0.2.tar.gz
+RUN wget https://github.com/BitzenyCoreDevelopers/bitzeny/archive/refs/tags/z2.0.2.tar.gz && \
+    tar -xzf z2.0.2.tar.gz
 
-WORKDIR /bitzeny-source
+WORKDIR /bitzeny-z2.0.2
 
 RUN sed -i '/AC_PREREQ/a\AR_FLAGS=cr' src/univalue/configure.ac && \
     sed -i '/AX_PROG_CC_FOR_BUILD/a\AR_FLAGS=cr' src/secp256k1/configure.ac && \
