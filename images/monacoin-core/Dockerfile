@@ -1,5 +1,7 @@
 FROM ghcr.io/yuki-js/ouchistack/coind-builder:latest as builder
 
+RUN apk add --no-cache openssl-dev
+
 WORKDIR /
 ENV MONACOIN_PREFIX=/opt/monacoin
 
@@ -36,8 +38,7 @@ RUN strip ${MONACOIN_PREFIX}/lib/libmonacoinconsensus.so.0.0.0
 FROM alpine
 
 ENV MONACOIN_DATA=/home/monacoin/.monacoin
-ENV MONACOIN_VERSION=0.17.1
-ENV MONACOIN_PREFIX=/opt/monacoin-${MONACOIN_VERSION}
+ENV MONACOIN_PREFIX=/opt/monacoin
 
 COPY --from=builder ${MONACOIN_PREFIX}/bin/monacoind /usr/bin/monacoind
 COPY --from=builder ${MONACOIN_PREFIX}/bin/monacoin-cli /usr/bin/monacoin-cli
