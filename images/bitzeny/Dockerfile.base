@@ -5,7 +5,7 @@ RUN wget https://github.com/BitzenyCoreDevelopers/bitzeny/releases/download/z2.0
     mv /bitzeny-2.0.2 /usr/local && \
     rm bitzeny-2.0.2-x86_64-linux-gnu.tar.gz
 
-RUN adduser -S user
+RUN adduser user
 RUN mkdir /data
 RUN chown user:user /data
 USER user
