@@ -7,7 +7,7 @@ RUN wget https://github.com/BitzenyCoreDevelopers/bitzeny/releases/download/z2.0
 
 RUN adduser user
 RUN mkdir /data
-RUN chown user:user /data
+RUN chown user /data
 USER user
 
 VOLUME /data

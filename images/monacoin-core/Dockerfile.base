@@ -41,7 +41,7 @@ RUN apk add --no-cache boost libzmq libsodium libevent
 
 RUN adduser -S user
 RUN mkdir /data
-RUN chown user:user /data
+RUN chown user /data
 USER user
 
 VOLUME /data
