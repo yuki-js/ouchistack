@@ -42,7 +42,7 @@ jobs:
         with:
           push: true
           context: images/${{ matrix.name }}
-          dockerfile: Dockerfile.base
+          file: images/${{ matrix.name }}/Dockerfile.base
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:base-${{ github.sha }}
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:base
