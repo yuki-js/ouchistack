@@ -3,11 +3,19 @@ version: "3"
 services:
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
-    # specify additional command line arguments here
-    command: bitcoind
     ports:
-      # change to 18333 if running testnet
       - 8333
+    volumes:
+      - bitcoin-core-data:/data
+
 volumes:
-  bitcoind:
+  bitcoin-core-data:
     driver: local
+  
+
+networks:
+  bitcoin:
+  monacoin:
+  bitzeny:
+  zcash:
+    

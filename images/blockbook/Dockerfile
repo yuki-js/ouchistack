@@ -14,9 +14,9 @@ RUN apk add --no-cache zeromq
 
 RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
-COPY --from=builder /go/src/github.com/trezor/blockbook /usr/local/bin/blockbook
-
+COPY --from=builder /go/src/github.com/trezor/blockbook /usr/local/blockbook
+COPY --from=builder /usr/local/lib/librocksdb.so.6.8 /usr/local/lib/librocksdb.so.6.8
 # expose internal and external port
 EXPOSE 8000 9000
 
-ENTRYPOINT ["/usr/local/bin/blockbook"]
+ENTRYPOINT ["/usr/local/blockbook/bin/blockbook"]
