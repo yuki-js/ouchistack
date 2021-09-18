@@ -2,7 +2,7 @@ version: "3"
 
 services:
   btcd:
-    image: docker.pkg.github.com/yuki-js/ouchistack/btcd:latest
+    image: ghcr.io/yuki-js/ouchistack/btcd:latest
     volumes:
       - shared:/rpc
       - btcd:/data
@@ -16,17 +16,13 @@ services:
     ports:
       - 8334
       - 8333
-  bitcoind:
-    image: nicolasdorier/docker-bitcoin:0.18.0
+  bitcoin-core:
+    image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
     # specify additional command line arguments here
     command: bitcoind
-    healthcheck:
-      test: ["CMD", "/entrypoint.sh", "bitcoin-cli", "getinfo"]
     ports:
       # change to 18333 if running testnet
       - 8333
-    volumes:
-      - bitcoind:/data
 volumes:
   shared:
     driver: local
