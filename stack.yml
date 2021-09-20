@@ -7,7 +7,12 @@ services:
       - 8333
     volumes:
       - bitcoin-core-data:/data
-
+    networks:
+      - bitcoin
+    environment:
+      NETWORK: mainnet
+  bitcoin-blockbook:
+    image: ghcr.io/yuki-js/ouchistack/bitcoin-blockbook:latest
 volumes:
   bitcoin-core-data:
     driver: local

@@ -1,15 +1,19 @@
 FROM ghcr.io/yuki-js/ouchistack/bitcoin-core:base
 
-USER user
-
-VOLUME /data
-# RPC port
+# RPC (internal use only)
 EXPOSE 8332
-# P2P port
+# P2P (internal use only)
 EXPOSE 8333
-# ZMQ raw block port
-EXPOSE 28332 
-# ZMQ raw tx port
-EXPOSE 28333
+# ZMQ (internal use only)
+EXPOSE 28332
 
-ENTRYPOINT ["/usr/bin/bitcoind"]
+VOLUME ["/data"]
+
+USER root
+COPY ./docker/bitcoind/bitcoin.conf /bitcoin.conf
+COPY ./docker/bitcoind/run-bitcoind.sh /run-bitcoind.sh
+RUN chmod +x /run-bitcoind.sh
+USER user
+RUN mkdir /data/blocks
+
+ENTRYPOINT ["/run-bitcoind.sh"]
