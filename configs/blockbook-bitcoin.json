@@ -11,7 +11,7 @@
   "rpc_pass": "rpcpass",
   "rpc_timeout": 25,
   "parse": true,
-  "message_queue_binding": "tcp://127.0.0.1:28332",
+  "message_queue_binding": "tcp://bitcoin-core:28332",
   "subversion": "",
   "address_format": "",
   "xpub_magic": 76067358,

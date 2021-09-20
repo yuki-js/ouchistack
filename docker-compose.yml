@@ -18,7 +18,7 @@ services:
       - 8000
       - 9000
     volumes:
-      - blockbook-data:/data
+      - bitcoin-blockbook-data:/data
       - ./configs/blockbook-bitcoin.json:/chaincfg.json
     networks:
       - bitcoin
@@ -26,13 +26,80 @@ services:
       - source: blockbook-bitcoin
         target: /chaincfg.json
         mode: 0444
-    entrypoint: ["/bin/sh", "-c", "cd /go/src/github.com/trezor/blockbook/; exec /go/src/github.com/trezor/blockbook/blockbook -sync -blockchaincfg /chaincfg.json -datadir /data -internal :9000 -public :8000 -log_dir /log"]
+    depends_on:
+      - bitcoin-core
   
+  monacoin-core:
+    image: ghcr.io/yuki-js/ouchistack/monacoin-core:latest
+    ports:
+      - 8333
+    volumes:
+      - monacoin-core-data:/data
+    networks:
+      - monacoin
+    environment:
+      NETWORK: mainnet
+
+  monacoin-blockbook:
+    image: ghcr.io/yuki-js/ouchistack/blockbook:latest
+    ports:
+      - 8000
+      - 9000
+    volumes:
+      - monacoin-blockbook-data:/data
+      - ./configs/blockbook-monacoin.json:/chaincfg.json
+    networks:
+      - monacoin
+    configs:
+      - source: blockbook-monacoin
+        target: /chaincfg.json
+        mode: 0444
+    depends_on:
+      - monacoin-core
+  
+  bitzeny-core:
+    image: ghcr.io/yuki-js/ouchistack/bitzeny:latest
+    ports:
+      - 8333
+    volumes:
+      - bitzeny-core-data:/data
+    networks:
+      - bitzeny
+    environment:
+      NETWORK: mainnet
+    
+  bitzeny-blockbook:
+    image: ghcr.io/yuki-js/ouchistack/blockbook:latest
+    ports:
+      - 8000
+      - 9000
+    volumes:
+      - bitzeny-blockbook-data:/data
+      - ./configs/blockbook-bitzeny.json:/chaincfg.json
+    networks:
+      - bitzeny
+    configs:
+      - source: blockbook-bitzeny
+        target: /chaincfg.json
+        mode: 0444
+    depends_on:
+      - bitzeny-core
+    
+
 volumes:
   bitcoin-core-data:
     driver: local
-  blockbook-data:
+  monacoin-core-data:
     driver: local
+  bitcoin-blockbook-data:
+    driver: local
+  monacoin-blockbook-data:
+    driver: local
+  bitzeny-core-data:
+    driver: local
+  bitzeny-blockbook-data:
+    driver: local
+
   
 
 networks:
@@ -44,3 +111,7 @@ networks:
 configs:
   blockbook-bitcoin:
     file: ./configs/blockbook-bitcoin.json
+  blockbook-monacoin:
+    file: ./configs/blockbook-monacoin.json
+  blockbook-bitzeny:
+    file: ./configs/blockbook-bitzeny.json
