@@ -24,7 +24,7 @@ RUN echo "http://example.com" > /go/src/github.com/trezor/blockbook/build/text/t
 
 
 COPY ./run-blockbook.sh /run-blockbook.sh
-RUN chmod +x /run-bitcoind.sh
+RUN chmod +x /run-blockbook.sh
 RUN adduser -S user
 RUN mkdir /data
 RUN chown user /data
