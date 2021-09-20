@@ -11,7 +11,7 @@ WORKDIR /workdir
 RUN git clone https://github.com/facebook/rocksdb.git
 WORKDIR /workdir/rocksdb
 RUN git checkout v6.8.1 && \
-    CFLAGS="-fPIC -march=skylake" CXXFLAGS="-fPIC -march=skylake" make -j$(nproc) shared_lib
+    CFLAGS="-fPIC -march=haswell" CXXFLAGS="-fPIC -march=haswell" make -j$(nproc) shared_lib
 RUN sed -i 's/install -C/install -c/g' Makefile && \
     make install-shared
 
