@@ -22,7 +22,21 @@ RUN mkdir -p /go/src/github.com/trezor/blockbook/build/text/
 RUN echo "Blockbook on ouchistack" > /go/src/github.com/trezor/blockbook/build/text/about
 RUN echo "http://example.com" > /go/src/github.com/trezor/blockbook/build/text/tos_link
 
-# expose internal and external port
-EXPOSE 8000 9000
 
-ENTRYPOINT ["/blockbook/blockbook"]
+COPY ./run-blockbook.sh /run-blockbook.sh
+RUN chmod +x /run-bitcoind.sh
+RUN adduser -S user
+RUN mkdir /data
+RUN chown user /data
+USER user
+RUN mkdir /data/blocks
+
+
+VOLUME /data
+
+# external port
+EXPOSE 8000
+# internal port
+EXPOSE 9000
+
+ENTRYPOINT ["/run-blockbook.sh"]
