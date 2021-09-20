@@ -10,8 +10,8 @@ EXPOSE 28332
 VOLUME ["/data"]
 
 USER root
-COPY ./docker/bitcoind/bitcoin.conf /bitcoin.conf
-COPY ./docker/bitcoind/run-bitcoind.sh /run-bitcoind.sh
+COPY ./bitcoin.conf /bitcoin.conf
+COPY ./run-bitcoind.sh /run-bitcoind.sh
 RUN chmod +x /run-bitcoind.sh
 USER user
 RUN mkdir /data/blocks
