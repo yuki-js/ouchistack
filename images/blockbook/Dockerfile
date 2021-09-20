@@ -15,13 +15,8 @@ RUN apk add --no-cache zeromq lz4-libs libbz2 snappy gflags zstd-libs
 
 RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
-COPY --from=builder /go/src/github.com/trezor/blockbook/blockbook /blockbook/blockbook
+COPY --from=builder /go/src/github.com/trezor/blockbook /go/src/github.com/trezor/blockbook
 COPY --from=builder /usr/local/lib/librocksdb.so.6.8 /usr/local/lib/librocksdb.so.6.8
-
-RUN mkdir -p /go/src/github.com/trezor/blockbook/build/text/
-RUN echo "Blockbook on ouchistack" > /go/src/github.com/trezor/blockbook/build/text/about
-RUN echo "http://example.com" > /go/src/github.com/trezor/blockbook/build/text/tos_link
-
 
 COPY ./run-blockbook.sh /run-blockbook.sh
 RUN chmod +x /run-blockbook.sh
