@@ -11,9 +11,9 @@ VOLUME ["/data"]
 
 USER root
 COPY ./bitcoin.conf /bitcoin.conf
-COPY ./run-bitcoind.sh /run-bitcoind.sh
-RUN chmod +x /run-bitcoind.sh
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 USER user
 RUN mkdir /data/blocks
 
-ENTRYPOINT ["/run-bitcoind.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
