@@ -16,6 +16,7 @@ services:
     image: ghcr.io/yuki-js/ouchistack/blockbook:latest
     ports:
       - 8000
+      - 9000
     volumes:
       - blockbook-data:/data
       - ./configs/blockbook-bitcoin.json:/chaincfg.json
@@ -25,7 +26,8 @@ services:
       - source: blockbook-bitcoin
         target: /chaincfg.json
         mode: 0444
-
+    entrypoint: ["/bin/sh", "-c", "cd /go/src/github.com/trezor/blockbook/; exec /go/src/github.com/trezor/blockbook/blockbook -sync -blockchaincfg /chaincfg.json -datadir /data -internal :9000 -public :8000 -log_dir /log"]
+  
 volumes:
   bitcoin-core-data:
     driver: local
