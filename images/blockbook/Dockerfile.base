@@ -1,4 +1,4 @@
-FROM alpine:latest as builder
+FROM golang:1.17-alpine as builder
 
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
 RUN apk update
@@ -14,8 +14,3 @@ RUN git checkout v6.8.1 && \
     CFLAGS="-fPIC" CXXFLAGS="-fPIC" PORTABLE=1 make -j$(nproc) shared_lib
 RUN sed -i 's/install -C/install -c/g' Makefile && \
     make install-shared
-
-# install go
-RUN wget https://golang.org/dl/go1.14.2.linux-amd64.tar.gz && tar -C /usr/local -xzf go1.14.2.linux-amd64.tar.gz && rm go1.14.2.linux-amd64.tar.gz
-ENV GOPATH=$HOME/go
-ENV PATH $PATH:/usr/local/go/bin:$GOPATH/bin
