@@ -70,3 +70,8 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache-1
           mv /tmp/.buildx-cache-2 /tmp/.buildx-cache
+      - name: Trim package
+        uses: windyakin/delete-package-versions-keep-latest@v1
+        with:
+          package-name: ${{ matrix.name }}
+          keep-latest-package-versions: 4
