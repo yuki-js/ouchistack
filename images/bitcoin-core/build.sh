@@ -1,4 +1,4 @@
-#!/usr/bin/export sh
+#!/usr/bin/env sh
 
 sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
 apk --no-cache add build-base automake wget curl autoconf
