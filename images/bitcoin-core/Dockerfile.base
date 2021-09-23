@@ -1,6 +1,7 @@
 FROM alpine:latest as builder
 
 COPY ./build.sh /build.sh
+RUN chmod +x /build.sh
 RUN /build.sh
 
 FROM alpine
