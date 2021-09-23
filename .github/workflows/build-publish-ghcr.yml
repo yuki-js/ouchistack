@@ -25,7 +25,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: v2-${{ matrix.name }}-buildx-${{ github.sha }}
+          key: ${{ matrix.name }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ matrix.name }}-buildx-
       - name: Set up QEMU
@@ -40,22 +40,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build base image
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: images/${{ matrix.name }}
-          file: images/${{ matrix.name }}/Dockerfile.base
-          platforms: linux/amd64,linux/arm64
-          tags: |
-            ghcr.io/${{ github.repository }}/${{ matrix.name }}:base-${{ github.sha }}
-            ghcr.io/${{ github.repository }}/${{ matrix.name }}:base
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-1,mode=max
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-      - name: Build container image
+      - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -64,12 +49,12 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:${{ github.sha }}
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:latest
-          cache-from: type=local,src=/tmp/.buildx-cache-1
-          cache-to: type=local,dest=/tmp/.buildx-cache-2,mode=max
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-1,mode=max
       - name: Move cache
         run: |
-          rm -rf /tmp/.buildx-cache-1
-          mv /tmp/.buildx-cache-2 /tmp/.buildx-cache
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-1 /tmp/.buildx-cache
       - name: Trim package
         uses: windyakin/delete-package-versions-keep-latest@v1
         with:
