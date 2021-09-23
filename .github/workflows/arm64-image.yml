@@ -1,4 +1,4 @@
-name: Publish Docker image
+name: Publish Docker image(ARM)
 on:
   push:
 
@@ -14,8 +14,6 @@ jobs:
           - blockbook
           - btcd
           - bitcoin-core
-          - monacoin-core
-          - bitzeny
     permissions:
       packages: write
       contents: read
@@ -26,9 +24,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ matrix.name }}-buildx-${{ github.sha }}
+          key: ${{ matrix.name }}-arm-buildx-${{ github.sha }}
           restore-keys: |
-            ${{ matrix.name }}-buildx-
+            ${{ matrix.name }}-arm-buildx-
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Log in to GitHub Docker Registry
@@ -43,6 +43,7 @@ jobs:
           push: true
           context: images/${{ matrix.name }}
           file: images/${{ matrix.name }}/Dockerfile.base
+          platforms: linux/arm64
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:base-${{ github.sha }}
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:base
@@ -56,6 +57,7 @@ jobs:
         with:
           push: true
           context: images/${{ matrix.name }}
+          platforms: linux/arm64
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:${{ github.sha }}
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:latest
