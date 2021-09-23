@@ -27,7 +27,11 @@ jobs:
           path: /tmp/.buildx-cache
           key: v2-${{ matrix.name }}-buildx-${{ github.sha }}
           restore-keys: |
-            v2-${{ matrix.name }}-buildx-
+            ${{ matrix.name }}-buildx-
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@master
+        with:
+          platforms: arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Log in to GitHub Docker Registry
