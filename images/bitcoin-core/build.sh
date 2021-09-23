@@ -3,7 +3,7 @@
 set -eu
 
 sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
-apk --no-cache add build-base automake wget curl boost-dev autoconf libtool git libevent-dev pkgconf
+apk --no-cache add build-base automake wget curl autoconf libtool git libevent-dev pkgconf
 
 cd /
 
