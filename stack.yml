@@ -3,10 +3,11 @@ version: "3.8"
 services:
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
+    command: "-connect=192.168.0.3:49158"
     ports:
       - 8333
     volumes:
-      - bitcoin-core-data:/data
+      - /ouchistack-data/hdd/bitcoin-core-data:/data
     networks:
       - bitcoin
     environment:
@@ -17,26 +18,15 @@ services:
     ports:
       - 8000
     volumes:
-      - blockbook-data:/data
+      - /ouchistack-data/hdd/blockbook-data:/data
     networks:
       - bitcoin
     configs:
       - source: blockbook-bitcoin
         target: /chaincfg.json
         mode: 0444
-
-volumes:
-  bitcoin-core-data:
-    driver: local
-  blockbook-data:
-    driver: local
-  
-
 networks:
   bitcoin:
-  monacoin:
-  bitzeny:
-  zcash:
 
 configs:
   blockbook-bitcoin:

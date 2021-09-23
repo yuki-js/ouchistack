@@ -3,10 +3,11 @@ version: "3.8"
 services:
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
+    command: "-connect=192.168.0.3:49158"
     ports:
       - 8333
     volumes:
-      - bitcoin-core-data:/data
+      - /ouchistack-data/hdd/bitcoin-core-data:/data
     networks:
       - bitcoin
     environment:
@@ -18,7 +19,7 @@ services:
       - 8000
       - 9000
     volumes:
-      - bitcoin-blockbook-data:/data
+      - /ouchistack-data/hdd/bitcoin-blockbook-data:/data
       - ./configs/blockbook-bitcoin.json:/chaincfg.json
     networks:
       - bitcoin
@@ -28,13 +29,13 @@ services:
         mode: 0444
     depends_on:
       - bitcoin-core
-  
+
   monacoin-core:
     image: ghcr.io/yuki-js/ouchistack/monacoin-core:latest
     ports:
       - 8333
     volumes:
-      - monacoin-core-data:/data
+      - /ouchistack-data/hdd/monacoin-core-data:/data
     networks:
       - monacoin
     environment:
@@ -46,7 +47,7 @@ services:
       - 8000
       - 9000
     volumes:
-      - monacoin-blockbook-data:/data
+      - /ouchistack-data/hdd/monacoin-blockbook-data:/data
       - ./configs/blockbook-monacoin.json:/chaincfg.json
     networks:
       - monacoin
@@ -56,25 +57,25 @@ services:
         mode: 0444
     depends_on:
       - monacoin-core
-  
+
   bitzeny-core:
     image: ghcr.io/yuki-js/ouchistack/bitzeny:latest
     ports:
       - 8333
     volumes:
-      - bitzeny-core-data:/data
+      - /ouchistack-data/hdd/bitzeny-core-data:/data
     networks:
       - bitzeny
     environment:
       NETWORK: mainnet
-    
+
   bitzeny-blockbook:
     image: ghcr.io/yuki-js/ouchistack/blockbook:latest
     ports:
       - 8000
       - 9000
     volumes:
-      - bitzeny-blockbook-data:/data
+      - /ouchistack-data/hdd/bitzeny-blockbook-data:/data
       - ./configs/blockbook-bitzeny.json:/chaincfg.json
     networks:
       - bitzeny
@@ -84,23 +85,6 @@ services:
         mode: 0444
     depends_on:
       - bitzeny-core
-    
-
-volumes:
-  bitcoin-core-data:
-    driver: local
-  monacoin-core-data:
-    driver: local
-  bitcoin-blockbook-data:
-    driver: local
-  monacoin-blockbook-data:
-    driver: local
-  bitzeny-core-data:
-    driver: local
-  bitzeny-blockbook-data:
-    driver: local
-
-  
 
 networks:
   bitcoin:
