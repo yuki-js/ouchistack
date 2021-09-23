@@ -13,8 +13,8 @@ jobs:
           - blockbook
           - btcd
           - bitcoin-core
-          - monacoin-core
-          - bitzeny
+          #- monacoin-core
+          #- bitzeny
     permissions:
       packages: write
       contents: read
@@ -42,6 +42,7 @@ jobs:
           push: true
           context: images/${{ matrix.name }}
           file: images/${{ matrix.name }}/Dockerfile.base
+          platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:base-${{ github.sha }}
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:base
@@ -55,6 +56,7 @@ jobs:
         with:
           push: true
           context: images/${{ matrix.name }}
+          platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:${{ github.sha }}
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:latest
