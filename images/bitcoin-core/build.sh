@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
+set -eu
+
 sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
-apk --no-cache add build-base automake wget curl autoconf
+apk --no-cache add build-base automake wget curl boost-dev autoconf libtool git libevent-dev pkgconf
 
 cd /
 
@@ -38,7 +40,7 @@ export CONFIG_SITE=/bitcoin-${BITCOIN_VERSION}/depends/$TRIPLE/share/config.site
     --with-utils \
     --with-libs \
     --with-daemon
-make -j4
+make -j$(nproc)
 make install
 
 

@@ -12,13 +12,13 @@ Docker
 Docker Swarm
 将来的にKubernetes
 
-### ディレクトリルール
+### パーティション/ディレクトリルール
 
 - システムディレクトリは最も高速なSSDもしくは別個にドライブを用意する
 - 最も高速なSSDから直接ブートできない環境ではHDDに/bootを置いて、細工する
 - /var/lib/dockerを最も高速なSSDにマップ
-- /ouchistack-data/hdd/をHDDにマップ
-- /ouchistack-data/ssd/をSSDにマップ
+- /ouchistack-data/hdd/にHDDの専用パーティションをマウント
+- /ouchistack-data/ssd/にSSDの専用パーティションをマウント
 
 ## イメージ
 
@@ -28,6 +28,6 @@ See [images/README.md](images/README.md)
 
 ### ボリューム
 
-- チェーンデータ等は`/ouchistack-data/hdd/*`へ
-- チェーンデータ等は`/ouchistack-data/hdd/*`へ
+- チェーンデータ等は`/ouchistack-data/hdd/*`へマップ
+- 高頻度・高速アクセスを要する場合は`/ouchistack-data/ssd/*`へマップ
 
