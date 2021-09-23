@@ -10,7 +10,6 @@ jobs:
       fail-fast: false
       matrix:
         name:
-          - coind-builder
           - blockbook
           - btcd
           - bitcoin-core
