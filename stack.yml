@@ -1,6 +1,16 @@
 version: "3.8"
 
 services:
+  envoy:
+    image: ghcr.io/yuki-js/ouchistack/envoy:latest
+    ports:
+      - "443:443"
+      - "9000"
+    configs:
+      - source: envoy
+        target: /etc/envoy/envoy.yaml
+    networks:
+      - bitcoin
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
     command: "-connect=192.168.0.3:49158"
@@ -31,3 +41,5 @@ networks:
 configs:
   blockbook-bitcoin:
     file: ./configs/blockbook-bitcoin.json
+  envoy:
+    file: ./configs/envoy.yml

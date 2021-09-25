@@ -13,6 +13,7 @@ jobs:
           - blockbook
           - btcd
           - bitcoin-core
+          - envoy
           #- monacoin-core
           #- bitzeny
     permissions:
