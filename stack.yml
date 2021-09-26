@@ -7,9 +7,6 @@ services:
       - "443:443"
       - "80"
       - "9000"
-    configs:
-      - source: envoy
-        target: /etc/envoy/envoy.yaml
     networks:
       - bitcoin
   bitcoin-core:
@@ -42,5 +39,3 @@ networks:
 configs:
   blockbook-bitcoin:
     file: ./configs/blockbook-bitcoin.json
-  envoy:
-    file: ./configs/envoy.yml

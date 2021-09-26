@@ -1,6 +1,15 @@
 version: "3.8"
 
 services:
+  envoy:
+    image: ghcr.io/yuki-js/ouchistack/envoy:latest
+    ports:
+      - "443:443"
+      - "80"
+      - "9000"
+    networks:
+      - bitcoin
+
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
     command: "-connect=192.168.0.3:49158"
@@ -30,72 +39,9 @@ services:
     depends_on:
       - bitcoin-core
 
-  monacoin-core:
-    image: ghcr.io/yuki-js/ouchistack/monacoin-core:latest
-    ports:
-      - 8333
-    volumes:
-      - /ouchistack-data/hdd/monacoin-core-data:/data
-    networks:
-      - monacoin
-    environment:
-      NETWORK: mainnet
-
-  monacoin-blockbook:
-    image: ghcr.io/yuki-js/ouchistack/blockbook:latest
-    ports:
-      - 8000
-      - 9000
-    volumes:
-      - /ouchistack-data/hdd/monacoin-blockbook-data:/data
-      - ./configs/blockbook-monacoin.json:/chaincfg.json
-    networks:
-      - monacoin
-    configs:
-      - source: blockbook-monacoin
-        target: /chaincfg.json
-        mode: 0444
-    depends_on:
-      - monacoin-core
-
-  bitzeny-core:
-    image: ghcr.io/yuki-js/ouchistack/bitzeny:latest
-    ports:
-      - 8333
-    volumes:
-      - /ouchistack-data/hdd/bitzeny-core-data:/data
-    networks:
-      - bitzeny
-    environment:
-      NETWORK: mainnet
-
-  bitzeny-blockbook:
-    image: ghcr.io/yuki-js/ouchistack/blockbook:latest
-    ports:
-      - 8000
-      - 9000
-    volumes:
-      - /ouchistack-data/hdd/bitzeny-blockbook-data:/data
-      - ./configs/blockbook-bitzeny.json:/chaincfg.json
-    networks:
-      - bitzeny
-    configs:
-      - source: blockbook-bitzeny
-        target: /chaincfg.json
-        mode: 0444
-    depends_on:
-      - bitzeny-core
-
 networks:
   bitcoin:
-  monacoin:
-  bitzeny:
-  zcash:
 
 configs:
   blockbook-bitcoin:
-    file: ./configs/blockbook-bitcoin.json
-  blockbook-monacoin:
-    file: ./configs/blockbook-monacoin.json
-  blockbook-bitzeny:
-    file: ./configs/blockbook-bitzeny.json
+    file: ./configs/blockbook-bitcoin.jsond
