@@ -32,7 +32,7 @@ static_resources:
     - name: service-bitcoin-blockbook
       type: STRICT_DNS
       dns_lookup_family: V4_ONLY
-      connect_timeout: 0.25
+      connect_timeout: 0.25s
       load_assignment:
         cluster_name: service-bitcoin-blockbook
         endpoints:
