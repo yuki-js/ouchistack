@@ -6,9 +6,11 @@ services:
     ports:
       - "443:443"
       - "80"
-      - "9000"
+      - "10000"
     networks:
       - bitcoin
+    depends_on:
+      - bitcoin-blockbook
 
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
@@ -44,4 +46,4 @@ networks:
 
 configs:
   blockbook-bitcoin:
-    file: ./configs/blockbook-bitcoin.jsond
+    file: ./configs/blockbook-bitcoin.json
