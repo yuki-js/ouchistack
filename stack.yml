@@ -5,6 +5,7 @@ services:
     image: ghcr.io/yuki-js/ouchistack/envoy:latest
     ports:
       - "443:443"
+      - "80"
       - "9000"
     configs:
       - source: envoy
