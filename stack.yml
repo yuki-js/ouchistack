@@ -29,7 +29,7 @@ services:
     ports:
       - 8000
     volumes:
-      - /ouchistack-data/hdd/blockbook-data:/data
+      - /ouchistack-data/hdd/bitcoin-blockbook-data:/data
     networks:
       - bitcoin
     configs:
