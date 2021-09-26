@@ -11,6 +11,9 @@ services:
       - bitcoin
     depends_on:
       - bitcoin-blockbook
+    configs:
+      - source: envoy.yml
+        target: /etc/envoy/envoy.yaml
 
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
@@ -44,3 +47,11 @@ networks:
 configs:
   blockbook-bitcoin:
     file: ./configs/blockbook-bitcoin.json
+  envoy:
+    file: ./configs/envoy.yaml
+
+secrets:
+  cert-chain:
+    external: true
+  private-key:
+    external: true

@@ -1,6 +1,5 @@
 FROM envoyproxy/envoy-alpine:v1.18-latest
 
-COPY ./envoy.yaml /etc/envoy/envoy.yaml
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod 555 /entrypoint.sh
 
