@@ -22,10 +22,10 @@ static_resources:
                   name: local_route
                   virtual_hosts:
                     - name: btc
-                      domains: ["*"]
+                      domains: ["localhost", "btc.ouchistack.missmonacoin.org"]
                       routes:
                         - match:
-                            prefix: "/btc"
+                            prefix: "/"
                           route:
                             cluster: service-bitcoin-blockbook
   clusters:
