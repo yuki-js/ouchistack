@@ -33,5 +33,7 @@ EXPOSE 8332
 EXPOSE 8333
 # ZMQ 
 EXPOSE 28332 
+# ZMQ (mirrored, for compatibility with lnd)
+EXPOSE 28333
 
 ENTRYPOINT ["/entrypoint.sh"]
