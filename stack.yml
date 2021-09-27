@@ -12,7 +12,7 @@ services:
     depends_on:
       - bitcoin-blockbook
     configs:
-      - source: envoy.yml
+      - source: envoy
         target: /etc/envoy/envoy.yaml
 
   bitcoin-core:
