@@ -14,7 +14,7 @@ wget https://bitcoincore.org/bin/bitcoin-core-${BITCOIN_VERSION}/bitcoin-${BITCO
 
 cd /bitcoin-${BITCOIN_VERSION}/depends
 TRIPLE=$(sh config.guess)
-make -j$(nproc) NO_QR=1 NO_WALLET=1 NO_QT=1 NO_BDB=1 NO_SQLITE=1
+make -j$(nproc) NO_QR=1 NO_QT=1
 
 cd /bitcoin-${BITCOIN_VERSION}
 
@@ -35,7 +35,6 @@ export CONFIG_SITE=/bitcoin-${BITCOIN_VERSION}/depends/$TRIPLE/share/config.site
     --disable-tests \
     --disable-bench \
     --disable-ccache \
-    --disable-wallet \
     --without-gui \
     --with-utils \
     --with-libs \
