@@ -14,7 +14,6 @@ services:
 
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
-    command: "-addpeer=bitcoin-core:8333"
     ports:
       - "8333:8333" # P2P
     volumes:
