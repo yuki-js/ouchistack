@@ -98,6 +98,20 @@ services:
         limits:
           cpus: "0.5"
           memory: "500M"
+  geth:
+    image: ghcr.io/yuki-js/ouchistack/geth:latest
+    volumes:
+      - /ouchistack-data/ssd/geth:/root/.ethereum
+    networks:
+      - geth
+      - envoy
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "2G"
 
 networks:
   bitcoin:
