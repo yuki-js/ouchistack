@@ -42,6 +42,13 @@ static_resources:
                             prefix: "/"
                           route:
                             cluster: cl-monacoin-blockbook
+                    - name: eth
+                      domains: ["os-eth.missmonacoin.org"]
+                      routes:
+                        - match:
+                            prefix: "/"
+                          route:
+                            cluster: cl-geth
 
   clusters:
     - name: cl-bitcoin-blockbook
@@ -83,6 +90,19 @@ static_resources:
                     socket_address:
                       address: cors-proxy
                       port_value: 8080
+    - name: cl-geth
+      type: STRICT_DNS
+      dns_lookup_family: V4_ONLY
+      connect_timeout: 0.25s
+      load_assignment:
+        cluster_name: geth
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: geth
+                      port_value: 8545
 admin:
   address:
     socket_address:
