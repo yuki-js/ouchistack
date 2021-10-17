@@ -12,7 +12,7 @@ RUN if [ "$(uname -m)" = "aarch64" ]; then \
 
 
 RUN cp -r /monacoin-0.17.1/* /usr/local/ && \
-    rm monacoin-0.17.1-x86_64-linux-gnu.tar.gz && \
+    rm -rf /monacoin-0.17.1* && \
     rm -rf /monacoin-0.17.1
 
 RUN adduser user
