@@ -16,6 +16,7 @@ jobs:
           - envoy
           - cors-proxy
           - monacoin-core
+          - geth
           #- bitzeny
     permissions:
       packages: write
