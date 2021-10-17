@@ -1,8 +1,17 @@
 FROM debian:11-slim
 RUN apt-get update &&  apt-get install -y wget
-RUN wget https://github.com/monacoinproject/monacoin/releases/download/monacoin-0.17.1/monacoin-0.17.1-x86_64-linux-gnu.tar.gz && \
-    tar -zvxf monacoin-0.17.1-x86_64-linux-gnu.tar.gz && \
-    cp -r /monacoin-0.17.1/* /usr/local/ && \
+
+
+RUN if [ "$(uname -m)" = "aarch64" ]; then \
+      wget https://github.com/monacoinproject/monacoin/releases/download/monacoin-0.17.1/monacoin-0.17.1-aarch64-linux-gnu.tar.gz && \
+      tar -zvxf monacoin-0.17.1-aarch64-linux-gnu.tar.gz \
+    elif [ "$(uname -m)" = "x86_64" ]; then \
+      wget https://github.com/monacoinproject/monacoin/releases/download/monacoin-0.17.1/monacoin-0.17.1-x86_64-linux-gnu.tar.gz && \
+      tar -zvxf monacoin-0.17.1-x86_64-linux-gnu.tar.gz \
+    fi
+
+
+RUN cp -r /monacoin-0.17.1/* /usr/local/ && \
     rm monacoin-0.17.1-x86_64-linux-gnu.tar.gz && \
     rm -rf /monacoin-0.17.1
 
