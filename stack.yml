@@ -63,12 +63,51 @@ services:
           cpus: "0.25"
           memory: "300M"
 
+  monacoin-core:
+    image: ghcr.io/yuki-js/ouchistack/monacoin-core:latest
+    volumes:
+      - /ouchistack-data/hdd/monacoin-core-data:/data
+    networks:
+      - monacoin
+    environment:
+      NETWORK: mainnet
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "500M"
+  monacoin-blockbook:
+    image: ghcr.io/yuki-js/ouchistack/blockbook:latest
+    volumes:
+      - /ouchistack-data/hdd/monacoin-blockbook-data:/data
+    networks:
+      - monacoin
+      - envoy
+    configs:
+      - source: blockbook-monacoin
+        target: /chaincfg.json
+        mode: 0444
+    depends_on:
+      - monacoin-core
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "500M"
+
 networks:
   bitcoin:
   envoy:
+  monacoin:
 
 configs:
   blockbook-bitcoin:
     file: ./configs/blockbook-bitcoin.json
   envoy:
     file: ./configs/envoy.yaml
+  blockbook-monacoin:
+    file: ./configs/blockbook-monacoin.json

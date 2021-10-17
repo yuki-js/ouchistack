@@ -15,7 +15,7 @@ jobs:
           - bitcoin-core
           - envoy
           - cors-proxy
-          #- monacoin-core
+          - monacoin-core
           #- bitzeny
     permissions:
       packages: write
