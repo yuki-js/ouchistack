@@ -17,6 +17,7 @@ static_resources:
                     typed_config:
                       "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
                 http_filters:
+                  - name: envoy.filters.http.cors
                   - name: envoy.filters.http.router
                 route_config:
                   name: local_route
@@ -28,6 +29,11 @@ static_resources:
                             prefix: "/"
                           route:
                             cluster: cl-bitcoin-blockbook
+                      cors:
+                        allow_origin_string_match: ["*"]
+                        allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
+                        max_age: 16777216
+
                     - name: cors-proxy
                       domains: ["os-proxy.missmonacoin.org"]
                       routes:
@@ -35,6 +41,10 @@ static_resources:
                             prefix: "/"
                           route:
                             cluster: cl-cors-proxy
+                      cors:
+                        allow_origin_string_match: ["*"]
+                        allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
+                        max_age: 16777216
                     - name: mona
                       domains: ["os-mona.missmonacoin.org"]
                       routes:
@@ -42,6 +52,11 @@ static_resources:
                             prefix: "/"
                           route:
                             cluster: cl-monacoin-blockbook
+                      cors:
+                        allow_origin_string_match: ["*"]
+                        allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
+                        max_age: 16777216
+
                     - name: eth
                       domains: ["os-eth.missmonacoin.org"]
                       routes:
@@ -49,6 +64,10 @@ static_resources:
                             prefix: "/"
                           route:
                             cluster: cl-geth
+                      cors:
+                        allow_origin_string_match: ["*"]
+                        allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
+                        max_age: 16777216
 
   clusters:
     - name: cl-bitcoin-blockbook
