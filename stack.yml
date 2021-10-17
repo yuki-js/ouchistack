@@ -52,6 +52,7 @@ services:
         limits:
           cpus: "1.0"
           memory: "4G"
+    stop_grace_period: 30s
 
   cors-proxy:
     image: ghcr.io/yuki-js/ouchistack/cors-proxy:latest
