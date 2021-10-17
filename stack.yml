@@ -4,8 +4,8 @@ services:
   envoy:
     image: ghcr.io/yuki-js/ouchistack/envoy:latest
     ports:
-      - "80:80"
-      - "10000"
+      - "127.0.0.1:80:80" # Service port to upstream proxy
+      - "127.0.0.1:10000:10000" # admin
     networks:
       - envoy
     configs:
@@ -15,7 +15,7 @@ services:
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
     ports:
-      - 8333
+      - "8333:8333" # P2P
     volumes:
       - /ouchistack-data/hdd/bitcoin-core-data:/data
     networks:
@@ -29,7 +29,7 @@ services:
   bitcoin-blockbook:
     image: ghcr.io/yuki-js/ouchistack/blockbook:latest
     ports:
-      - 8000
+      - "127.0.0.1:9000:9000" # internal
     volumes:
       - /ouchistack-data/hdd/bitcoin-blockbook-data:/data
     networks:
@@ -61,9 +61,3 @@ configs:
     file: ./configs/blockbook-bitcoin.json
   envoy:
     file: ./configs/envoy.yaml
-
-secrets:
-  cert-chain:
-    external: true
-  private-key:
-    external: true
