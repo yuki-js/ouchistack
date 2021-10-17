@@ -13,4 +13,4 @@ else
   exit 1
 fi
 
-exec /usr/bin/monacoind -conf=/monacoin.conf -chain=$CHAIN "$@"
+exec monacoind -conf=/monacoin.conf -chain=$CHAIN "$@"

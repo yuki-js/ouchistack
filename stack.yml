@@ -103,7 +103,7 @@ services:
     volumes:
       - /ouchistack-data/ssd/geth:/root/.ethereum
     networks:
-      - geth
+      - eth
       - envoy
     deploy:
       placement:
@@ -117,6 +117,7 @@ networks:
   bitcoin:
   envoy:
   monacoin:
+  eth:
 
 configs:
   blockbook-bitcoin:
