@@ -4,10 +4,10 @@ RUN apt-get update &&  apt-get install -y wget
 
 RUN if [ "$(uname -m)" = "aarch64" ]; then \
       wget https://github.com/BitzenyCoreDevelopers/bitzeny/releases/download/z2.0.2/bitzeny-2.0.2-aarch64-linux-gnu.tar.gz; \
-      tar -zvxf monacoin-0.17.1-aarch64-linux-gnu.tar.gz; \
+      tar -zvxf bitzeny-2.0.2-aarch64-linux-gnu.tar.gz; \
     else \
       wget https://github.com/BitzenyCoreDevelopers/bitzeny/releases/download/z2.0.2/bitzeny-2.0.2-x86_64-linux-gnu.tar.gz; \
-      tar -zvxf monacoin-0.17.1-x86_64-linux-gnu.tar.gz; \
+      tar -zvxf bitzeny-2.0.2-x86_64-linux-gnu.tar.gz; \
     fi
 
 RUN cp -r /bitzeny-2.0.2/* /usr/local/ && \
