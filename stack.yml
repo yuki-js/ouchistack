@@ -14,6 +14,7 @@ services:
 
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
+    command: "-addpeer=bitcoin-core:8333"
     ports:
       - "8333:8333" # P2P
     volumes:
@@ -25,6 +26,10 @@ services:
     deploy:
       placement:
         max_replicas_per_node: 1
+      resources:
+        limits:
+          cpu: "1.0"
+          memory: "1G"
 
   bitcoin-blockbook:
     image: ghcr.io/yuki-js/ouchistack/blockbook:latest
@@ -44,13 +49,20 @@ services:
     deploy:
       placement:
         max_replicas_per_node: 1
+      resources:
+        limits:
+          cpu: "1.0"
+          memory: "4G"
 
   cors-proxy:
     image: ghcr.io/yuki-js/ouchistack/cors-proxy:latest
     networks:
       - envoy
-    depends_on:
-      - envoy
+    deploy:
+      resources:
+        limits:
+          cpu: "0.25"
+          memory: "300M"
 
 networks:
   bitcoin:
