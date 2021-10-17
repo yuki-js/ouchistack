@@ -35,7 +35,7 @@ static_resources:
                               google_re2: {}
                               regex: \*
                         allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
-                        max_age: 16777216
+                        max_age: "16777216"
 
                     - name: cors-proxy
                       domains: ["os-proxy.missmonacoin.org"]
@@ -50,7 +50,7 @@ static_resources:
                               google_re2: {}
                               regex: \*
                         allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
-                        max_age: 16777216
+                        max_age: "16777216"
                     - name: mona
                       domains: ["os-mona.missmonacoin.org"]
                       routes:
@@ -64,7 +64,7 @@ static_resources:
                               google_re2: {}
                               regex: \*
                         allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
-                        max_age: 16777216
+                        max_age: "16777216"
 
                     - name: eth
                       domains: ["os-eth.missmonacoin.org"]
@@ -79,7 +79,7 @@ static_resources:
                               google_re2: {}
                               regex: \*
                         allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
-                        max_age: 16777216
+                        max_age: "16777216"
 
   clusters:
     - name: cl-bitcoin-blockbook
