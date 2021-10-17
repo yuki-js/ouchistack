@@ -14,6 +14,7 @@ jobs:
           - btcd
           - bitcoin-core
           - envoy
+          - cors-proxy
           #- monacoin-core
           #- bitzeny
     permissions:
