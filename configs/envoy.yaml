@@ -21,19 +21,18 @@ static_resources:
                 route_config:
                   name: local_route
                   virtual_hosts:
-                    - name: btc
-                      domains: ["btc.ouchistack.missmonacoin.org"]
+                    - name: ouchistack
+                      domains: ["*"]
                       routes:
                         - match:
-                            prefix: "/"
+                            prefix: "/btc"
                           route:
+                            prefix_rewrite: "/"
                             cluster: cl-bitcoin-blockbook
-                    - name: cors-proxy
-                      domains: ["cors-proxy.ouchistack.missmonacoin.org"]
-                      routes:
                         - match:
-                            prefix: "/"
+                            prefix: "/proxy"
                           route:
+                            prefix_rewrite: "/"
                             cluster: cl-cors-proxy
   clusters:
     - name: cl-bitcoin-blockbook
