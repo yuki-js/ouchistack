@@ -28,7 +28,7 @@ services:
         max_replicas_per_node: 1
       resources:
         limits:
-          cpu: "1.0"
+          cpus: "1.0"
           memory: "1G"
 
   bitcoin-blockbook:
@@ -51,7 +51,7 @@ services:
         max_replicas_per_node: 1
       resources:
         limits:
-          cpu: "1.0"
+          cpus: "1.0"
           memory: "4G"
 
   cors-proxy:
@@ -61,7 +61,7 @@ services:
     deploy:
       resources:
         limits:
-          cpu: "0.25"
+          cpus: "0.25"
           memory: "300M"
 
 networks:
