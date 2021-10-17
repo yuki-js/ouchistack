@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 if [[ $NETWORK == "mainnet" ]]; then
   CHAIN="main"
