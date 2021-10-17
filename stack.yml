@@ -4,20 +4,16 @@ services:
   envoy:
     image: ghcr.io/yuki-js/ouchistack/envoy:latest
     ports:
-      - "443:443"
-      - "80"
+      - "80:80"
       - "10000"
     networks:
-      - bitcoin
-    depends_on:
-      - bitcoin-blockbook
+      - envoy
     configs:
       - source: envoy
         target: /etc/envoy/envoy.yaml
 
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
-    command: "-connect=192.168.0.3:49158"
     ports:
       - 8333
     volumes:
@@ -26,6 +22,9 @@ services:
       - bitcoin
     environment:
       NETWORK: mainnet
+    deploy:
+      placement:
+        max_replicas_per_node: 1
 
   bitcoin-blockbook:
     image: ghcr.io/yuki-js/ouchistack/blockbook:latest
@@ -35,14 +34,27 @@ services:
       - /ouchistack-data/hdd/bitcoin-blockbook-data:/data
     networks:
       - bitcoin
+      - envoy
     configs:
       - source: blockbook-bitcoin
         target: /chaincfg.json
         mode: 0444
     depends_on:
       - bitcoin-core
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+
+  cors-proxy:
+    image: ghcr.io/yuki-js/ouchistack/cors-proxy:latest
+    networks:
+      - envoy
+    depends_on:
+      - envoy
+
 networks:
   bitcoin:
+  envoy:
 
 configs:
   blockbook-bitcoin:
