@@ -50,3 +50,4 @@ EXPOSE 8000
 EXPOSE 9000
 
 ENTRYPOINT ["/run-blockbook.sh"]
+CMD ["-workers=1", "-dbcache=0"]
