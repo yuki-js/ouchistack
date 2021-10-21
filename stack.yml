@@ -46,11 +46,11 @@ services:
     deploy:
       placement:
         max_replicas_per_node: 1
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: "4G"
-    stop_grace_period: 60s
+      #resources:
+      #limits:
+      #cpus: "1.0"
+      #memory: "8G"
+    stop_grace_period: 5m
 
   cors-proxy:
     image: ghcr.io/yuki-js/ouchistack/cors-proxy:latest
