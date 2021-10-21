@@ -11,8 +11,11 @@ RUN apt-get update && apt-get -y install \
     autoconf libtool ncurses-dev unzip git python python-zmq \
     zlib1g-dev wget curl bsdmainutils automake &&\
     mkdir -p /src/zcash/; cd /src/zcash; \
-    git clone ${ZCASH_URL} zcash && cd zcash && git checkout ${ZCASH_VERSION} && \
-    ./zcutil/build.sh -j$(nproc) && \
+    git clone ${ZCASH_URL} zcash && cd zcash && git checkout ${ZCASH_VERSION}
+
+RUN ln -s /usr/bin/g++ /usr/bin/aarch64-unknown-linux-gnu-g++
+
+RUN ./zcutil/build.sh -j$(nproc) && \
     echo "Success"
 
 FROM debian:stretch-slim
