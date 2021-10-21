@@ -18,6 +18,7 @@ jobs:
           - monacoin-core
           - geth
           - bitzeny
+          - zcash
     permissions:
       packages: write
       contents: read
