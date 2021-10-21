@@ -7,7 +7,7 @@ ENV     ZCASH_URL=https://github.com/zcash/zcash.git \
 
 
 RUN apt-get update && apt-get -y install \
-    build-essential pkg-config libc6-dev m4 g++-multilib \
+    build-essential pkg-config libc6-dev m4 \
     autoconf libtool ncurses-dev unzip git python python-zmq \
     zlib1g-dev wget curl bsdmainutils automake &&\
     mkdir -p /src/zcash/; cd /src/zcash; \
