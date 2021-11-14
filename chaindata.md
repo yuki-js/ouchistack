@@ -1,0 +1,4 @@
+- Bitcoin Core ブロック 706103 まで同期したもの https://drive.google.com/file/d/1zIelXhGsFzTJZGZKE47oy-tTL7B-gYD9/view?usp=sharing
+- Bitcoin Blockbook 多分これも 706103 までのもの https://drive.google.com/file/d/1eoVqmSVKfZnGKDXlOeP7xePACnKvx9hn/view?usp=sharing
+- Monacoin Core https://drive.google.com/file/d/1873AT38DJE_Dd5MD1-XUVv0sSFxIWl7L/view?usp=sharing
+- Monacoin Blockbook https://drive.google.com/file/d/1UJ_wdkfiHb66exr5B7wR1J6CZwgN7UkD/view?usp=sharing
