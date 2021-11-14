@@ -70,9 +70,19 @@ static_resources:
                       domains: ["os-eth.missmonacoin.org"]
                       routes:
                         - match:
+                            prefix: "/openethereum"
+                          route:
+                            prefix_rewrite: "/"
+                            cluster: cl-openethereum
+                        - match:
+                            prefix: "/geth"
+                          route:
+                            prefix_rewrite: "/"
+                            cluster: cl-geth
+                        - match:
                             prefix: "/"
                           route:
-                            cluster: cl-geth
+                            cluster: cl-eth
                       cors:
                         allow_origin_string_match:
                           - safe_regex:
@@ -85,7 +95,7 @@ static_resources:
     - name: cl-bitcoin-blockbook
       type: STRICT_DNS
       dns_lookup_family: V4_ONLY
-      connect_timeout: 30s
+      connect_timeout: 10s
       load_assignment:
         cluster_name: cl-bitcoin-blockbook
         endpoints:
@@ -98,7 +108,7 @@ static_resources:
     - name: cl-monacoin-blockbook
       type: STRICT_DNS
       dns_lookup_family: V4_ONLY
-      connect_timeout: 30s
+      connect_timeout: 10s
       load_assignment:
         cluster_name: cl-monacoin-blockbook
         endpoints:
@@ -111,7 +121,7 @@ static_resources:
     - name: cl-cors-proxy
       type: STRICT_DNS
       dns_lookup_family: V4_ONLY
-      connect_timeout: 0.25s
+      connect_timeout: 1s
       load_assignment:
         cluster_name: cl-cors-proxy
         endpoints:
@@ -121,10 +131,41 @@ static_resources:
                     socket_address:
                       address: cors-proxy
                       port_value: 8080
+    - name: cl-eth
+      type: STRICT_DNS
+      dns_lookup_family: V4_ONLY
+      connect_timeout: 1s
+      load_assignment:
+        cluster_name: eth
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: geth
+                      port_value: 8545
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: openethereum
+                      port_value: 8545
+    - name: cl-openethereum
+      type: STRICT_DNS
+      dns_lookup_family: V4_ONLY
+      connect_timeout: 1s
+      load_assignment:
+        cluster_name: openethereum
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: openethereum
+                      port_value: 8545
     - name: cl-geth
       type: STRICT_DNS
       dns_lookup_family: V4_ONLY
-      connect_timeout: 0.25s
+      connect_timeout: 1s
       load_assignment:
         cluster_name: geth
         endpoints:

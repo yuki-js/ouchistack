@@ -10,6 +10,8 @@ services:
     configs:
       - source: envoy
         target: /etc/envoy/envoy.yaml
+    deploy:
+      replicas: 2
 
   bitcoin-core:
     image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
@@ -22,6 +24,7 @@ services:
     environment:
       NETWORK: mainnet
     deploy:
+      replicas: 1
       placement:
         max_replicas_per_node: 1
         constraints:
@@ -46,14 +49,9 @@ services:
     depends_on:
       - bitcoin-core
     deploy:
+      replicas: 2
       placement:
         max_replicas_per_node: 1
-        constraints:
-          - "node.role==manager"
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: "4G"
     stop_grace_period: 5m
 
   cors-proxy:
@@ -61,10 +59,7 @@ services:
     networks:
       - envoy
     deploy:
-      resources:
-        limits:
-          cpus: "0.25"
-          memory: "300M"
+      replicas: 2
 
   monacoin-core:
     image: ghcr.io/yuki-js/ouchistack/monacoin-core:latest
@@ -77,10 +72,7 @@ services:
     deploy:
       placement:
         max_replicas_per_node: 1
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: "500M"
+
   monacoin-blockbook:
     image: ghcr.io/yuki-js/ouchistack/blockbook:latest
     command: ["-workers=1", "-dbcache=0"]
@@ -98,12 +90,6 @@ services:
     deploy:
       placement:
         max_replicas_per_node: 1
-        constraints:
-          - "node.role==manager"
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: "500M"
     stop_grace_period: 1m
 
   geth:
@@ -116,6 +102,34 @@ services:
     deploy:
       placement:
         max_replicas_per_node: 1
+        constraints:
+          - "node.hostname==iwashi"
+
+  openethereum:
+    image: openethereum/openethereum:latest
+    volumes:
+      - /ouchistack-data/ssd/openethereum:/home/openethereum/.local/share/
+    command:
+      - "--chain=ethereum"
+      - "--unsafe-expose"
+      - "--jsonrpc-hosts=all"
+      - "--jsonrpc-cors=all"
+      - "--max-peers=48"
+      - "--snapshot-peers=8"
+      - "--scale-verifiers" # add
+      - "--cache-size-db=8192" # add
+      - "--cache-size-blocks=256" # add
+      - "--cache-size-queue=4096" # add
+      - "--cache-size-state=4096" # add
+      - "--num-verifiers=64" # add
+    networks:
+      - eth
+      - envoy
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+        constraints:
+          - "node.hostname==kurage"
 
 networks:
   bitcoin:
