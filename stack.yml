@@ -4,7 +4,7 @@ services:
   envoy:
     image: ghcr.io/yuki-js/ouchistack/envoy:latest
     ports:
-      - "80:80"
+      - "8080:80"
     networks:
       - envoy
     configs:
@@ -52,6 +52,10 @@ services:
       replicas: 2
       placement:
         max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "4G"
     stop_grace_period: 5m
 
   cors-proxy:
@@ -72,6 +76,10 @@ services:
     deploy:
       placement:
         max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1G"
 
   monacoin-blockbook:
     image: ghcr.io/yuki-js/ouchistack/blockbook:latest
@@ -90,6 +98,10 @@ services:
     deploy:
       placement:
         max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1G"
     stop_grace_period: 1m
 
   geth:
@@ -104,11 +116,16 @@ services:
         max_replicas_per_node: 1
         constraints:
           - "node.hostname==iwashi"
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "8G"
+    stop_grace_period: 5m
 
   openethereum:
     image: openethereum/openethereum:latest
     volumes:
-      - /ouchistack-data/ssd/openethereum:/home/openethereum/.local/share/
+      - /ouchistack-data/hdd/openethereum:/home/openethereum/.local/share/
     command:
       - "--chain=ethereum"
       - "--unsafe-expose"
@@ -126,10 +143,11 @@ services:
       - eth
       - envoy
     deploy:
+      replicas: 0
       placement:
         max_replicas_per_node: 1
         constraints:
-          - "node.hostname==kurage"
+          - "node.hostname==disabled"
 
 networks:
   bitcoin:

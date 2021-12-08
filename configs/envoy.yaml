@@ -31,11 +31,10 @@ static_resources:
                             cluster: cl-bitcoin-blockbook
                       cors:
                         allow_origin_string_match:
-                          - safe_regex:
-                              google_re2: {}
-                              regex: \*
+                          - exact: https://monya-wallet.github.io
                         allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
                         max_age: "16777216"
+                        allow_headers: content-type
 
                     - name: cors-proxy
                       domains: ["os-proxy.missmonacoin.org"]
@@ -46,11 +45,11 @@ static_resources:
                             cluster: cl-cors-proxy
                       cors:
                         allow_origin_string_match:
-                          - safe_regex:
-                              google_re2: {}
-                              regex: \*
+                          - exact: https://monya-wallet.github.io
                         allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
                         max_age: "16777216"
+                        allow_headers: content-type
+
                     - name: mona
                       domains: ["os-mona.missmonacoin.org"]
                       routes:
@@ -60,11 +59,10 @@ static_resources:
                             cluster: cl-monacoin-blockbook
                       cors:
                         allow_origin_string_match:
-                          - safe_regex:
-                              google_re2: {}
-                              regex: \*
+                          - exact: https://monya-wallet.github.io
                         allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
                         max_age: "16777216"
+                        allow_headers: content-type
 
                     - name: eth
                       domains: ["os-eth.missmonacoin.org"]
@@ -85,12 +83,10 @@ static_resources:
                             cluster: cl-eth
                       cors:
                         allow_origin_string_match:
-                          - safe_regex:
-                              google_re2: {}
-                              regex: \*
+                          - exact: https://monya-wallet.github.io
                         allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
                         max_age: "16777216"
-
+                        allow_headers: content-type
   clusters:
     - name: cl-bitcoin-blockbook
       type: STRICT_DNS
