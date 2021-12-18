@@ -149,11 +149,59 @@ services:
         constraints:
           - "node.hostname==disabled"
 
+  bitzeny-core:
+    image: ghcr.io/yuki-js/ouchistack/bitzeny:latest
+    ports:
+      - "8334:8333" # P2P
+    volumes:
+      - /ouchistack-data/hdd/bitzeny-core-data:/data
+    networks:
+      - bitzeny
+    environment:
+      NETWORK: mainnet
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+        constraints:
+          - "node.hostname==kurage"
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: "4G"
+
+  bitzeny-blockbook:
+    image: ghcr.io/yuki-js/ouchistack/blockbook:latest
+    command: ["-workers=1", "-dbcache=0"]
+    volumes:
+      - /ouchistack-data/hdd/bitzeny-blockbook-data:/data
+    networks:
+      - bitzeny
+      - envoy
+    configs:
+      - source: blockbook-bitzeny
+        target: /chaincfg.json
+        mode: 0444
+    depends_on:
+      - bitzeny-core
+    deploy:
+      replicas: 2
+      placement:
+        max_replicas_per_node: 1
+        constraints:
+          - "node.hostname==kurage"
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: "4G"
+    stop_grace_period: 5m
+
 networks:
   bitcoin:
   envoy:
   monacoin:
   eth:
+  bitzeny:
 
 configs:
   blockbook-bitcoin:
@@ -162,3 +210,5 @@ configs:
     file: ./configs/envoy.yaml
   blockbook-monacoin:
     file: ./configs/blockbook-monacoin.json
+  blockbook-bitzeny:
+    file: ./configs/blockbook-bitzeny.json
