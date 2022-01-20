@@ -219,6 +219,7 @@ networks:
   monacoin:
   eth:
   bitzeny:
+  lnd:
 
 configs:
   blockbook-bitcoin:

@@ -18,6 +18,7 @@ jobs:
           - monacoin-core
           - geth
           - bitzeny
+          - lnd
     permissions:
       packages: write
       contents: read
