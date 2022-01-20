@@ -163,11 +163,9 @@ services:
       replicas: 1
       placement:
         max_replicas_per_node: 1
-        constraints:
-          - "node.hostname==kurage"
       resources:
         limits:
-          cpus: "4.0"
+          cpus: "1.0"
           memory: "4G"
 
   bitzeny-blockbook:
@@ -188,13 +186,32 @@ services:
       replicas: 2
       placement:
         max_replicas_per_node: 1
-        constraints:
-          - "node.hostname==kurage"
       resources:
         limits:
-          cpus: "4.0"
+          cpus: "1.0"
           memory: "4G"
     stop_grace_period: 5m
+  lnd:
+    image: ghcr.io/yuki-js/ouchistack/lnd:latest
+    volumes:
+      - /ouchistack-data/ssd/lnd-data:/data
+    networks:
+      - lnd
+      - bitcoin
+    environment:
+      NETWORK: mainnet
+      RPCPASS: rpcpass
+    depends_on:
+      - bitcoin-core
+    ports:
+      - 9735:9735
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "4G"
 
 networks:
   bitcoin:

@@ -63,7 +63,19 @@ static_resources:
                         allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
                         max_age: "16777216"
                         allow_headers: content-type
-
+                    - name: zny
+                      domains: ["os-zny.missmonacoin.org"]
+                      routes:
+                        - match:
+                            prefix: "/"
+                          route:
+                            cluster: cl-bitzeny-blockbook
+                      cors:
+                        allow_origin_string_match:
+                          - exact: https://monya-wallet.github.io
+                        allow_methods: GET, POST, PUT, DELETE, OPTIONS, HEAD
+                        max_age: "16777216"
+                        allow_headers: content-type
                     - name: eth
                       domains: ["os-eth.missmonacoin.org"]
                       routes:
@@ -113,6 +125,19 @@ static_resources:
                   address:
                     socket_address:
                       address: monacoin-blockbook
+                      port_value: 8000
+    - name: cl-bitzeny-blockbook
+      type: STRICT_DNS
+      dns_lookup_family: V4_ONLY
+      connect_timeout: 10s
+      load_assignment:
+        cluster_name: cl-bitzeny-blockbook
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: bitzeny-blockbook
                       port_value: 8000
     - name: cl-cors-proxy
       type: STRICT_DNS
