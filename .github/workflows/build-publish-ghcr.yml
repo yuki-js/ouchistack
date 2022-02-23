@@ -20,6 +20,7 @@ jobs:
           - bitzeny
           - lnd
           - heimdall
+          - bor
     permissions:
       packages: write
       contents: read
