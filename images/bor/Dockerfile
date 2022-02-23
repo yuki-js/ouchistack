@@ -15,7 +15,10 @@ FROM debian:10-slim
 
 COPY --from=builder /workdir/build/bin/* /usr/local/bin/
 
-EXPOSE 8545 8546 30303 30303/udp
+COPY genesis.json /genesis.json
+RUN bor --datadir /data init /genesis.json
 
+EXPOSE 8545 8546 30303 30303/udp
+VOLUME ["/data"]
 
 ENTRYPOINT ["entrypoint.sh"]

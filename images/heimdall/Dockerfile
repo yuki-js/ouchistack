@@ -11,15 +11,17 @@ RUN make build network=mainnet
 
 FROM debian:10-slim
 
-ARG HEIMDALL_DIR=/heimdall
-ENV HEIMDALL_DIR=$HEIMDALL_DIR
+ENV HEIMDALL_DIR=/data
 
+RUN mkdir /data
 COPY --from=builder /workdir/build/heimdalld /usr/local/bin
 COPY --from=builder /workdir/build/heimdallcli /usr/local/bin
 COPY --from=builder /workdir/bridge /usr/local/bin
-COPY genesis-mainnet.json /heimdall
+COPY config /data/config
+COPY entrypoint.sh /entrypoint.sh
 
 
 EXPOSE 1317 26656 26657
+VOLUME ["/data"]
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
