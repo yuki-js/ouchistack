@@ -7,15 +7,16 @@ RUN git clone https://github.com/maticnetwork/heimdall /workdir
 
 WORKDIR /workdir
 
-RUN make install network=mainnet
+RUN make build network=mainnet
 
 FROM debian:10-slim
 
 ARG HEIMDALL_DIR=/heimdall
 ENV HEIMDALL_DIR=$HEIMDALL_DIR
 
-COPY --from=builder /workdir /heimdall
-RUN ls /heimdall
+COPY --from=builder /workdir/build/heimdalld /usr/local/bin
+COPY --from=builder /workdir/build/heimdallcli /usr/local/bin
+COPY --from=builder /workdir/bridge /usr/local/bin
 COPY genesis-mainnet.json /heimdall
 
 
