@@ -14,9 +14,8 @@ FROM debian:10-slim
 ARG HEIMDALL_DIR=/heimdall
 ENV HEIMDALL_DIR=$HEIMDALL_DIR
 
-COPY --from=builder /workdir/heimdalld /usr/local/bin/
-COPY --from=builder /workdir/heimdallcli /usr/local/bin/
-COPY --from=builder /workdir/bridge /usr/local/bin/
+COPY --from=builder /workdir /heimdall
+RUN ls /heimdall
 COPY genesis-mainnet.json /heimdall
 
 
