@@ -122,33 +122,6 @@ services:
           memory: "8G"
     stop_grace_period: 5m
 
-  openethereum:
-    image: openethereum/openethereum:latest
-    volumes:
-      - /ouchistack-data/hdd/openethereum:/home/openethereum/.local/share/
-    command:
-      - "--chain=ethereum"
-      - "--unsafe-expose"
-      - "--jsonrpc-hosts=all"
-      - "--jsonrpc-cors=all"
-      - "--max-peers=48"
-      - "--snapshot-peers=8"
-      - "--scale-verifiers" # add
-      - "--cache-size-db=8192" # add
-      - "--cache-size-blocks=256" # add
-      - "--cache-size-queue=4096" # add
-      - "--cache-size-state=4096" # add
-      - "--num-verifiers=64" # add
-    networks:
-      - eth
-      - envoy
-    deploy:
-      replicas: 0
-      placement:
-        max_replicas_per_node: 1
-        constraints:
-          - "node.hostname==disabled"
-
   bitzeny-core:
     image: ghcr.io/yuki-js/ouchistack/bitzeny:latest
     ports:
@@ -195,6 +168,7 @@ services:
     image: ghcr.io/yuki-js/ouchistack/lnd:latest
     volumes:
       - /ouchistack-data/ssd/lnd-data:/data
+      - /ouchistack-data/ssd/lnd-data/rpc:/rpc
     networks:
       - lnd
       - bitcoin
