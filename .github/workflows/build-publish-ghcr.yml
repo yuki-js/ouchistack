@@ -19,6 +19,7 @@ jobs:
           - geth
           - bitzeny
           - lnd
+          - heimdall
     permissions:
       packages: write
       contents: read
