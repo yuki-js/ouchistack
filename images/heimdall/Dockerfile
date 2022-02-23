@@ -1,7 +1,7 @@
 FROM debian:10-slim as builder
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt update && apt upgrade -y && apt install git curl golang -y
+RUN apt update && apt upgrade -y && apt install git curl golang build-essential -y
 
 RUN git clone https://github.com/maticnetwork/heimdall /workdir
 
