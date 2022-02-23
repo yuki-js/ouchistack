@@ -55,7 +55,7 @@ services:
       resources:
         limits:
           cpus: "1.0"
-          memory: "4G"
+          memory: "2G"
     stop_grace_period: 5m
 
   cors-proxy:
@@ -119,7 +119,7 @@ services:
       resources:
         limits:
           cpus: "2.0"
-          memory: "8G"
+          memory: "4G"
     stop_grace_period: 5m
 
   bitzeny-core:
@@ -139,7 +139,7 @@ services:
       resources:
         limits:
           cpus: "1.0"
-          memory: "4G"
+          memory: "2G"
 
   bitzeny-blockbook:
     image: ghcr.io/yuki-js/ouchistack/blockbook:latest
@@ -162,7 +162,7 @@ services:
       resources:
         limits:
           cpus: "1.0"
-          memory: "4G"
+          memory: "2G"
     stop_grace_period: 5m
   lnd:
     image: ghcr.io/yuki-js/ouchistack/lnd:latest
