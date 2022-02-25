@@ -217,7 +217,7 @@ services:
     depends_on:
       - heimdallr
     volumes:
-      - /ouchistack-data/ssd2/bor:/bordatattt/chaindata
+      - /ouchistack-data/ssd2/bor:/data/bor/chaindata
     networks:
       - eth
     deploy:
