@@ -18,6 +18,7 @@ COPY --from=builder /workdir/build/heimdalld /usr/local/bin
 COPY --from=builder /workdir/build/heimdallcli /usr/local/bin
 COPY --from=builder /workdir/bridge /usr/local/bin
 COPY config /heimdalldata/config
+COPY config/heimdall-config.toml /heimdall-config.toml
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
