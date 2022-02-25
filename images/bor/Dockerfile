@@ -24,4 +24,4 @@ RUN chmod +x /entrypoint.sh
 EXPOSE 8545 8546 30303 30303/udp
 VOLUME ["/data"]
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
