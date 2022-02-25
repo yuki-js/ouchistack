@@ -203,6 +203,30 @@ services:
         limits:
           cpus: "0.5"
           memory: "2G"
+  heimdallr:
+    image: ghcr.io/yuki-js/ouchistack/heimdall
+    depends_on:
+      - heimdalld
+    command:
+      - rest-server
+      - --chain-id=137
+      - --laddr=tcp://0.0.0.0:1317
+      - --node=tcp://heimdalld:26657
+  bor: 
+    image: ghcr.io/yuki-js/ouchistack/bor
+    depends_on:
+      - heimdallr
+    volumes:
+      - /ouchistack-data/ssd2/bor:/bordatattt/chaindata
+    networks:
+      - eth
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "8G"
   rabbitmq:
     image: "rabbitmq:3-alpine"
     networks:
