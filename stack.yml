@@ -186,6 +186,30 @@ services:
         limits:
           cpus: "1.0"
           memory: "4G"
+  heimdalld:
+    image: ghcr.io/yuki-js/ouchistack/heimdall
+    command: ["start"]
+    volumes:
+      - /ouchistack-data/ssd2/heimdall:/heimdalldata/data
+    networks:
+      - eth
+    depends_on:
+      - geth
+      - rabbitmq
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "2G"
+  rabbitmq:
+    image: "rabbitmq:3-alpine"
+    networks:
+      - eth
+    deploy:
+      replicas: 1
+      
 
 networks:
   bitcoin:
