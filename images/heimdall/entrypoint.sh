@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if [ ! -f $HEIMDALL_DIR/config/heimdall-config.toml ]; then
+if [ ! -f $HEIMDALL_DIR/config/node_key.json ]; then
     heimdalld --home=$HEIMDALL_DIR init
 fi;
 
