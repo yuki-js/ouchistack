@@ -188,7 +188,11 @@ services:
           memory: "4G"
   heimdalld:
     image: ghcr.io/yuki-js/ouchistack/heimdall
-    command: ["start"]
+    command: 
+      - start
+      - --moniker=ouchistack
+      - --p2p.laddr=tcp://0.0.0.0:26656
+      - --rpc.laddr=tcp://0.0.0.0:26657
     volumes:
       - /ouchistack-data/ssd2/heimdall:/heimdalldata/data
     networks:
@@ -207,6 +211,8 @@ services:
     image: ghcr.io/yuki-js/ouchistack/heimdall
     depends_on:
       - heimdalld
+    networks:
+      - eth
     command:
       - rest-server
       - --chain-id=137
@@ -220,6 +226,7 @@ services:
       - /ouchistack-data/ssd2/bor:/data/bor/chaindata
     networks:
       - eth
+      - envoy
     deploy:
       placement:
         max_replicas_per_node: 1
