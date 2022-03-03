@@ -21,4 +21,4 @@ networks:
     internal: false
 configs:
   envoy:
-    file: ./configs/envoy.yaml
+    file: ../configs/envoy.yaml

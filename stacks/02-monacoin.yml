@@ -55,4 +55,4 @@ networks:
 
 configs:
   blockbook-monacoin:
-    file: ./configs/blockbook-monacoin.json
+    file: ../configs/blockbook-monacoin.json

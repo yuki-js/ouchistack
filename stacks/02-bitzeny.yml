@@ -58,4 +58,4 @@ networks:
 
 configs:
   blockbook-bitzeny:
-    file: ./configs/blockbook-bitzeny.json
+    file: ../configs/blockbook-bitzeny.json

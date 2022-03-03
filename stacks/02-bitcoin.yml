@@ -56,4 +56,4 @@ networks:
 
 configs:
   blockbook-bitcoin:
-    file: ./configs/blockbook-bitcoin.json
+    file: ../configs/blockbook-bitcoin.json
