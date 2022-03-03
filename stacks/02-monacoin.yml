@@ -3,7 +3,7 @@ version: "3.8"
 services:
   proxy:
     networks: 
-      - web-bitcoin
+      - web-monacoin
   monacoin-core:
     image: ghcr.io/yuki-js/ouchistack/monacoin-core:latest
     volumes:
