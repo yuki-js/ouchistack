@@ -23,8 +23,8 @@ COPY genesis.json /genesis.json
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 RUN useradd user
-USER user
 RUN chown user /datadir && chown user /ancient
+USER user
 
 EXPOSE 8545 8546 30303 30303/udp
 

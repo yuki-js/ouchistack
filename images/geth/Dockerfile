@@ -10,7 +10,7 @@ RUN mkdir /datadir
 RUN mkdir /ancient
 
 RUN adduser -S user
-USER user
 RUN chown user /datadir && chown user /ancient
+USER user
 
 ENTRYPOINT ["/entrypoint.sh"]
