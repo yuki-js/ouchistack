@@ -16,8 +16,7 @@ ARGS=""
 STACKS=stacks/*.yml
 
 for STACK in $STACKS; do
-  ARGS="${ARGS} -f ${STACK}"
+  ARGS="${ARGS} -c ${STACK}"
 done
 
-# run docker compose
-docker compose ${ARGS} config "$@"
+docker stack deploy ${ARGS} ouchistack
