@@ -10,7 +10,7 @@ services:
       - /ouchistack-data/hdd/bitcoin-core-data:/data
     networks:
       - int-bitcoin
-      - internet
+      - ext-bitcoin
     environment:
       NETWORK: mainnet
     deploy:
@@ -51,6 +51,8 @@ networks:
     internal: true
   web-bitcoin:
     internal: true
+  ext-bitcoin:
+    internal: false
 
 configs:
   blockbook-bitcoin:

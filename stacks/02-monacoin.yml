@@ -9,7 +9,7 @@ services:
     volumes:
       - /ouchistack-data/hdd/monacoin-core-data:/data
     networks:
-      - internet
+      - ext-monacoin
       - int-monacoin
     environment:
       NETWORK: mainnet
@@ -49,6 +49,8 @@ networks:
     internal: true
   web-monacoin:
     internal: true
+  ext-monacoin:
+    internal: false
 
 
 configs:

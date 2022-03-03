@@ -7,7 +7,7 @@ services:
   cors-proxy:
     image: ghcr.io/yuki-js/ouchistack/cors-proxy:latest
     networks:
-      - internet
+      - ext-corsproxy
       - web-corsproxy
     deploy:
       replicas: 2
@@ -15,3 +15,5 @@ services:
 networks:
   web-corsproxy:
     internal: true
+  ext-corsproxy:
+    internal: false

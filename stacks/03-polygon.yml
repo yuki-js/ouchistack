@@ -25,7 +25,7 @@ services:
       - /ouchistack-data/ssd2/heimdall:/heimdalldata/data
     networks:
       - int-polygon
-      - internet
+      - ext-polygon
       - rpc-ethereum
     depends_on:
       - geth
@@ -57,7 +57,7 @@ services:
       - /ouchistack-data/hdd/bor-ancient:/ancient
     networks:
       - int-polygon
-      - internet
+      - ext-polygon
       - web-polygon
     deploy:
       placement:
@@ -74,3 +74,5 @@ networks:
     internal: true
   rpc-ethereum:
     internal: true
+  ext-polygon:
+    internal: false

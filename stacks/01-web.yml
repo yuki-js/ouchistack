@@ -7,7 +7,7 @@ services:
       - "8080:80"
     networks:
       - web-default
-      - internet
+      - ext-web
     configs:
       - source: envoy
         target: /etc/envoy/envoy.yaml
@@ -17,8 +17,8 @@ services:
 networks: 
   web-default:
     internal: true
-
-
+  ext-web:
+    internal: false
 configs:
   envoy:
     file: ./configs/envoy.yaml

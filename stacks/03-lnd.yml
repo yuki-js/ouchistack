@@ -10,7 +10,7 @@ services:
       - /ouchistack-data/ssd/lnd-data:/data
       - /ouchistack-data/ssd/lnd-data/rpc:/rpc
     networks:
-      - internet
+      - ext-lnd
       - rpc-bitcoin
     environment:
       NETWORK: mainnet
@@ -30,3 +30,5 @@ services:
 networks:
   rpc-bitcoin:
     internal: true
+  ext-lnd:
+    internal: false

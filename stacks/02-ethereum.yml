@@ -11,7 +11,7 @@ services:
       - /ouchistack-data/ssd/geth:/datadir
       - /ouchistack-data/hdd/geth-ancient:/ancient
     networks:
-      - internet
+      - ext-ethereum
       - web-ethereum
     deploy:
       placement:
@@ -27,3 +27,5 @@ services:
 networks:
   web-ethereum:
     internal: true
+  ext-ethereum:
+    internal: false

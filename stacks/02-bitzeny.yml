@@ -10,7 +10,7 @@ services:
       - /ouchistack-data/hdd/bitzeny-core-data:/data
     networks:
       - int-bitzeny
-      - internet
+      - ext-bitzeny
     environment:
       NETWORK: mainnet
     deploy:
@@ -52,6 +52,8 @@ networks:
     internal: true
   web-bitzeny:
     internal: true
+  ext-bitzeny:
+    internal: false
 
 
 configs:
