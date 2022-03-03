@@ -1,10 +1,10 @@
-name: Publish Docker image
+name: Push Docker image to GitHub Container Registry
 on:
   push:
 
 jobs:
   push_to_registry:
-    name: Push Docker image to GitHub Container Registry
+    name: build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

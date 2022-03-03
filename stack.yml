@@ -38,7 +38,7 @@ services:
     image: ghcr.io/yuki-js/ouchistack/blockbook:latest
     command: ["-workers=1", "-dbcache=0"]
     volumes:
-      - /ouchistack-data/hdd/bitcoin-blockbook-data:/data
+      - /ouchistack-data/ssd2/bitcoin-blockbook-data:/data
     networks:
       - bitcoin
       - envoy
@@ -49,7 +49,7 @@ services:
     depends_on:
       - bitcoin-core
     deploy:
-      replicas: 2
+      replicas: 0
       placement:
         max_replicas_per_node: 1
       resources:
@@ -107,7 +107,8 @@ services:
   geth:
     image: ghcr.io/yuki-js/ouchistack/geth:latest
     volumes:
-      - /ouchistack-data/ssd/geth:/root/.ethereum
+      - /ouchistack-data/ssd/geth:/datadir
+      - /ouchistack-data/hdd/geth-ancient:/ancient
     networks:
       - eth
       - envoy
@@ -223,7 +224,8 @@ services:
     depends_on:
       - heimdallr
     volumes:
-      - /ouchistack-data/ssd2/bor:/data/bor/chaindata
+      - /ouchistack-data/ssd2/bor:/datadir
+      - /ouchistack-data/hdd/bor-ancient:/ancient
     networks:
       - eth
       - envoy
