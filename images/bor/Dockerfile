@@ -15,13 +15,18 @@ FROM debian:10-slim
 
 COPY --from=builder /workdir/build/bin/* /usr/local/bin/
 
+RUN mkdir /datadir
+RUN mkdir /ancient
+
 COPY genesis.json /genesis.json
-RUN bor --datadir /data init /genesis.json
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+RUN useradd user
+USER user
+RUN chown user /datadir && chown user /ancient
 
 EXPOSE 8545 8546 30303 30303/udp
-VOLUME ["/data"]
+
 
 ENTRYPOINT ["/entrypoint.sh"]

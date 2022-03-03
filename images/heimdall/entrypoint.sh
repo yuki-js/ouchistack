@@ -2,7 +2,7 @@
 
 if [ ! -f $HEIMDALL_DIR/config/node_key.json ]; then
     heimdalld --home=$HEIMDALL_DIR --with-heimdall-config /heimdall-config.toml init
-fi;
+fi
 
 if [ "$1" = 'bridge' ]; then
     shift

@@ -1,4 +1,16 @@
 FROM ethereum/client-go
 
-ENTRYPOINT ["geth"]
-CMD ["--http", "--http.addr", "0.0.0.0", "--http.port", "8545", "--ws", "--ws.addr", "0.0.0.0", "--ws.port", "8546", "--http.vhosts", "*", "--http.corsdomain", "*"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+
+EXPOSE 8545 8546 30303 30303/udp
+
+RUN mkdir /datadir
+RUN mkdir /ancient
+
+RUN adduser -S user
+USER user
+RUN chown user /datadir && chown user /ancient
+
+ENTRYPOINT ["/entrypoint.sh"]
