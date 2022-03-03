@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  proxy:
+    networks: 
+      - web-bitzeny
+  bitzeny-core:
+    image: ghcr.io/yuki-js/ouchistack/bitzeny:latest
+    volumes:
+      - /ouchistack-data/hdd/bitzeny-core-data:/data
+    networks:
+      - int-bitzeny
+      - internet
+    environment:
+      NETWORK: mainnet
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "2G"
+
+  bitzeny-blockbook:
+    image: ghcr.io/yuki-js/ouchistack/blockbook:latest
+    command: ["-workers=1", "-dbcache=0"]
+    volumes:
+      - /ouchistack-data/hdd/bitzeny-blockbook-data:/data
+    networks:
+      - int-bitzeny
+      - web-bitzeny
+    configs:
+      - source: blockbook-bitzeny
+        target: /chaincfg.json
+        mode: 0444
+    depends_on:
+      - bitzeny-core
+    deploy:
+      replicas: 2
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "2G"
+    stop_grace_period: 5m
+
+
+networks:
+  int-bitzeny:
+    internal: true
+  web-bitzeny:
+    internal: true
+
+
+configs:
+  blockbook-bitzeny:
+    file: ./configs/blockbook-bitzeny.json

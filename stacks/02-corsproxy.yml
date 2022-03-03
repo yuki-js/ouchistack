@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  proxy:
+    networks: 
+      - web-corsproxy
+  cors-proxy:
+    image: ghcr.io/yuki-js/ouchistack/cors-proxy:latest
+    networks:
+      - internet
+      - web-corsproxy
+    deploy:
+      replicas: 2
+
+networks:
+  web-corsproxy:
+    internal: true

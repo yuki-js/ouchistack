@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  proxy:
+    networks: 
+      - web-bitcoin
+  bitcoin-core:
+    image: ghcr.io/yuki-js/ouchistack/bitcoin-core:latest
+    volumes:
+      - /ouchistack-data/hdd/bitcoin-core-data:/data
+    networks:
+      - int-bitcoin
+      - internet
+    environment:
+      NETWORK: mainnet
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1G"
+
+  bitcoin-blockbook:
+    image: ghcr.io/yuki-js/ouchistack/blockbook:latest
+    command: ["-workers=1", "-dbcache=0"]
+    volumes:
+      - /ouchistack-data/ssd2/bitcoin-blockbook-data:/data
+    networks:
+      - int-bitcoin
+      - web-bitcoin
+    configs:
+      - source: blockbook-bitcoin
+        target: /chaincfg.json
+        mode: 0444
+    depends_on:
+      - bitcoin-core
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "2G"
+    stop_grace_period: 5m
+
+networks:
+  int-bitcoin:
+    internal: true
+  web-bitcoin:
+    internal: true
+
+configs:
+  blockbook-bitcoin:
+    file: ./configs/blockbook-bitcoin.json

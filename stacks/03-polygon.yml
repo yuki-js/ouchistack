@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+  geth: 
+    networks:
+      - rpc-ethereum
+  proxy:
+    networks:
+      - web-polygon
+  rabbitmq:
+    image: "rabbitmq:3-alpine"
+    networks:
+      - int-polygon
+    deploy:
+      replicas: 1
+
+  heimdalld:
+    image: ghcr.io/yuki-js/ouchistack/heimdall
+    command: 
+      - start
+      - --moniker=ouchistack
+      - --p2p.laddr=tcp://0.0.0.0:26656
+      - --rpc.laddr=tcp://0.0.0.0:26657
+    volumes:
+      - /ouchistack-data/ssd2/heimdall:/heimdalldata/data
+    networks:
+      - int-polygon
+      - internet
+      - rpc-ethereum
+    depends_on:
+      - geth
+      - rabbitmq
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "2G"
+  heimdallr:
+    image: ghcr.io/yuki-js/ouchistack/heimdall
+    depends_on:
+      - heimdalld
+    networks:
+      - int-polygon
+    command:
+      - rest-server
+      - --chain-id=137
+      - --laddr=tcp://0.0.0.0:1317
+      - --node=tcp://heimdalld:26657
+  bor: 
+    image: ghcr.io/yuki-js/ouchistack/bor
+    depends_on:
+      - heimdallr
+    volumes:
+      - /ouchistack-data/ssd2/bor:/datadir
+      - /ouchistack-data/hdd/bor-ancient:/ancient
+    networks:
+      - int-polygon
+      - internet
+      - web-polygon
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "2.0"
+    stop_grace_period: 5m
+
+networks:
+  int-polygon:
+    internal: true
+  web-polygon:
+    internal: true
+  rpc-ethereum:
+    internal: true
