@@ -7,6 +7,7 @@ RUN git clone https://github.com/maticnetwork/heimdall /workdir
 
 WORKDIR /workdir
 
+RUN git checkout v0.2.7
 RUN make build network=mainnet
 
 FROM debian:10-slim
