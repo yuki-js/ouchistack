@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  bitcoin-core:
+    networks:
+      - rpc-bitcoin
+  lnd:
+    image: ghcr.io/yuki-js/ouchistack/lnd:latest
+    volumes:
+      - /ouchistack-data/ssd/lnd-data:/data
+      - /ouchistack-data/ssd/lnd-data/rpc:/rpc
+    networks:
+      - ext-lnd
+      - rpc-bitcoin
+    environment:
+      NETWORK: mainnet
+      RPCPASS: rpcpass
+    depends_on:
+      - bitcoin-core
+    ports:
+      - 9735:9735
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "4G"
+
+networks:
+  rpc-bitcoin:
+    internal: true
+  ext-lnd:
+    internal: false

@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+
+  proxy:
+    networks: 
+      - web-ethereum
+  geth:
+    image: ghcr.io/yuki-js/ouchistack/geth:latest
+    volumes:
+      - /ouchistack-data/ssd/geth:/datadir
+      - /ouchistack-data/hdd/geth-ancient:/ancient
+    networks:
+      - ext-ethereum
+      - web-ethereum
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+        constraints:
+          - "node.hostname==iwashi"
+      resources:
+        limits:
+          cpus: "2.0"
+    stop_grace_period: 5m
+
+
+networks:
+  web-ethereum:
+    internal: true
+  ext-ethereum:
+    internal: false

@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  proxy:
+    networks: 
+      - web-monacoin
+  monacoin-core:
+    image: ghcr.io/yuki-js/ouchistack/monacoin-core:latest
+    volumes:
+      - /ouchistack-data/hdd/monacoin-core-data:/data
+    networks:
+      - ext-monacoin
+      - int-monacoin
+    environment:
+      NETWORK: mainnet
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1G"
+
+  monacoin-blockbook:
+    image: ghcr.io/yuki-js/ouchistack/blockbook:latest
+    command: ["-workers=1", "-dbcache=0"]
+    volumes:
+      - /ouchistack-data/hdd/monacoin-blockbook-data:/data
+    networks:
+      - int-monacoin
+      - web-monacoin
+    configs:
+      - source: blockbook-monacoin
+        target: /chaincfg.json
+        mode: 0444
+    depends_on:
+      - monacoin-core
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1G"
+    stop_grace_period: 1m
+
+networks: 
+  int-monacoin:
+    internal: true
+  web-monacoin:
+    internal: true
+  ext-monacoin:
+    internal: false
+
+
+configs:
+  blockbook-monacoin:
+    file: ../configs/blockbook-monacoin.json

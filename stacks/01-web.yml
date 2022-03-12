@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  proxy:
+    image: ghcr.io/yuki-js/ouchistack/envoy:latest
+    ports:
+      - "8080:80"
+    networks:
+      - web-default
+    configs:
+      - source: envoy
+        target: /etc/envoy/envoy.yaml
+    deploy:
+      replicas: 2
+
+networks: 
+  web-default:
+    internal: true
+configs:
+  envoy:
+    file: ../configs/envoy.yaml
