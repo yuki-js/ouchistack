@@ -43,6 +43,9 @@ services:
       - heimdalld
     networks:
       - int-polygon
+      - ext-polygon
+    volumes:
+      - /ouchistack-data/ssd2/heimdall:/heimdalldata/data
     command:
       - rest-server
       - --chain-id=137
