@@ -51,7 +51,8 @@ jobs:
         with:
           push: true
           context: images/${{ matrix.name }}
-          platforms: linux/amd64,linux/arm64
+          # platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:${{ github.sha }}
             ghcr.io/${{ github.repository }}/${{ matrix.name }}:latest
