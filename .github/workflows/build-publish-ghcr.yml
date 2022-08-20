@@ -1,6 +1,7 @@
 name: Push Docker image to GitHub Container Registry
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   push_to_registry:
