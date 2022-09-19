@@ -12,7 +12,8 @@ services:
     networks:
       - int-polygon
     deploy:
-      replicas: 1
+      # replicas: 1
+      replicas: 0
 
   heimdalld:
     image: ghcr.io/yuki-js/ouchistack/heimdall
@@ -31,6 +32,7 @@ services:
       - geth
       - rabbitmq
     deploy:
+      replicas: 0
       placement:
         max_replicas_per_node: 1
       resources:
@@ -51,6 +53,14 @@ services:
       - --chain-id=137
       - --laddr=tcp://0.0.0.0:1317
       - --node=tcp://heimdalld:26657
+    deploy:
+      replicas: 0
+      placement:
+        max_replicas_per_node: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "2G"
   bor: 
     image: ghcr.io/yuki-js/ouchistack/bor
     depends_on:
@@ -63,6 +73,7 @@ services:
       - ext-polygon
       - web-polygon
     deploy:
+      replicas: 0
       placement:
         max_replicas_per_node: 1
       resources:

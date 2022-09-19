@@ -14,6 +14,7 @@ services:
       - ext-ethereum
       - web-ethereum
     deploy:
+      replicas: 0 # disable while eth2 is not ready for my environment
       placement:
         max_replicas_per_node: 1
         constraints:

@@ -7,7 +7,7 @@ RUN git clone https://github.com/maticnetwork/bor /workdir
 
 WORKDIR /workdir
 
-RUN make bor-all
+RUN make bor
 
 
 
